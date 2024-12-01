@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Cadastro de Item de Venda</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/veiculo.ico" />
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h2>Cadastro de Itens de Venda</h2>
+  <form class="form-cadastro" th:action="${itemVenda.id == null} ? @{/itemvenda/save} : @{/itemvenda/update}" th:object="${itemVenda}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    <div class="form-group">
+      <input type="text" th:field="*{quantidade}" placeholder="Quantidade">
+    </div>
+
+    <div class="form-group">
+      <input type="text" th:field="*{produto.id}" placeholder="Id do Produto">
+    </div>
+
+    <div class="form-group">
+      <input type="text" th:field="*{venda.id}" placeholder="Id da Venda">
+    </div>
+
+    <div class="form-group">
+      <input type="submit" value="Enviar">
+    </div>
+  </form>
+</body>
+</html>

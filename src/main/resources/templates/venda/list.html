@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head(~{})}">
+    <title>Lista de Vendas</title>
+</head>
+
+<body>
+<main>
+    <div class="container mt-5">
+        <h2>Lista de Vendas</h2>
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+        <form th:action="@{/venda/list}"  method="get">
+            <input type="hidden" name="filtered" value="true" />
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="dataInicio">Data Inicial</label>
+                    <input type="date" id="dataInicio" name="dataInicio" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label for="dataFim">Data Final</label>
+                    <input type="date" id="dataFim" name="dataFim" class="form-control">
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped table-hover mt-5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Detalhes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="venda : ${vendas}">
+                <td th:text="${venda.id}"></td>
+                <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                <td th:text="${venda.pessoa.getNomeOuRazaoSocial()}"></td>
+                <td th:text="${#numbers.formatCurrency(venda.totalVenda())}"></td>
+                <td>
+                    <a th:href="@{/venda/detail/{id}(id=${venda.id})}" class="btn btn-primary" style="cursor: pointer;">itens</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-outline-success" th:onclick="|window.location.href='/venda/form'|">Nova Venda</button>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head(~{})}"></head>
+<body>
+<main>
+    <div class="container mt-5">
+        <h2>Lista de Produtos</h2>
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descrição</th>
+                <th>Valor (R$)</th>
+                <th colspan="2" class="text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.id}"></td>
+                <td th:text="${produto.descricao}"></td>
+                <td th:text="${produto.valor}"></td>
+                <td class="text-center">
+                    <a th:href="@{/produto/edit/{id}(id=${produto.id})}" class="btn btn-primary">Editar</a>
+                </td>
+                <td class="text-center">
+                    <a th:href="@{/produto/remove/{id}(id=${produto.id})}"
+                       class="btn btn-danger"
+                       onclick="return confirm('Confirma a exclusão do produto?')">Excluir</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-outline-success" th:onclick="|window.location.href='/produto/form'|">Novo Produto</button>
+    </div>
+</main>
+</body>
+</html>
