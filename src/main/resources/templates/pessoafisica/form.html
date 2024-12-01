@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head(~{})}">
+</head>
+
+<body>
+<main>
+    <div class="container mt-5">
+        <h2>Cadastro de Clientes PF</h2>
+        <form th:action="@{/pessoafisica/save}" th:object="${pessoafisica}" method="post">
+            <div class="form-row">
+                <div class="mb-2 col-lg-4">
+                    <input type="hidden" th:field="*{id}">
+                    <input class="form-control" type="text" th:field="*{nome}" placeholder="Nome">
+                </div>
+                <div class="mb-2 col-lg-4">
+                    <input class="form-control" type="text" th:field="*{telefone}" placeholder="Telefone">
+                </div>
+                <div class="mb-2 col-lg-4">
+                    <input class="form-control" type="text" th:field="*{email}" placeholder="E-mail">
+                </div>
+                <div class="mb-2 col-lg-4">
+                    <input class="form-control" type="text" th:field="*{cpf}" placeholder="CPF">
+                </div>
+                <div class="mb-2 col-lg-4">
+                    <button class="btn btn-outline-success">Enviar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

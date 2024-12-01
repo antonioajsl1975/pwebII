@@ -1,0 +1,195 @@
+/* Estilização global da página */
+body {
+    position: relative;
+    margin: 0;
+    height: 100vh; /* Para garantir que o fundo cubra toda a tela */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('veiculos.webp'); /* Caminho relativo à imagem */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.2; /* Define o nível de translucidez */
+    z-index: -1; /* Mantém a imagem atrás do conteúdo */
+}
+
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Estilização da tabela */
+.table {
+    width: 70%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    text-align: center; /* Centraliza o texto na tabela */
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #c4c6c4;
+    color: #0a0a0a;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.table td {
+    color: #333;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1; /* Efeito hover para a tabela */
+}
+
+.table a {
+    text-decoration: none;
+    color: #9fa29f;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.table a:hover {
+    color: #333; /* Efeito hover nos links de ação */
+}
+
+/* Botão Novo */
+.new-button-container {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.btn-new {
+    background-color: #c4c6c4;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-new:hover {
+    background-color: #8b8e8b;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilização do formulário */
+.form-cadastro {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto; /* Centraliza o formulário na tela */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.form-group input[type="submit"] {
+    background-color: #c4c6c4; /* Cor do botão */
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .table th, .table td {
+        font-size: 14px; /* Ajusta o tamanho da fonte para telas menores */
+    }
+
+    .btn-new {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .form-cadastro {
+        padding: 15px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="submit"] {
+        font-size: 0.9em;
+    }
+}
+.total-venda {
+    align-self: stretch; /* Faz o total ocupar a largura da tabela */
+}
+.table-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Deixa a tabela com fundo branco semi-transparente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
