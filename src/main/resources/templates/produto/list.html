@@ -2,12 +2,12 @@
 
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head th:replace="~{fragments/head :: head(~{})}"></head>
+<head th:replace="~{fragments/head :: head('Lista de Produtos',~{})}">
+</head>
 <body>
 <main>
     <div class="container mt-5">
         <h2>Lista de Produtos</h2>
-        <!-- Exibição de mensagens de erro e sucesso -->
         <div th:replace="~{fragments/msgerro :: msgerro}"></div>
 
         <table class="table table-striped table-hover">

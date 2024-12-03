@@ -2,7 +2,7 @@
 
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head th:replace="~{fragments/head :: head(~{})}">
+<head th:replace="~{fragments/head :: head('Cadastro de venda', ~{})}">
 </head>
 
 <body>
@@ -15,6 +15,14 @@
                     <input type="hidden" th:field="*{id}">
                     <input class="form-control" type="text" th:field="*{dataVenda}" placeholder="Data da Venda">
                 </div>
+                <div class="mb-2 col-lg-4" >
+                    <select class="form-select" th:field="*{tipoPessoa}">
+                        <option value="" selected>Tipo de Cliente</option>
+                        <option value="fisica">Pessoa Física</option>
+                        <option value="juridica">Pessoa Jurídica</option>
+                    </select>
+                </div>
+
                 <div class="mb-2 col-lg-4">
                     <button class="btn btn-outline-success">Enviar</button>
                 </div>

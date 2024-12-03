@@ -1,5 +1,6 @@
 package br.edu.ifto.aula06.model.entity;
 
+import br.edu.ifto.aula06.model.utils.Constraint;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,9 +13,11 @@ public class ItemVenda {
     private Long id;
     private Double quantidade;
 
+    @JoinColumn(foreignKey = @ForeignKey(name = Constraint.fk_item__produto))
     @ManyToOne
     private Produto produto;
 
+    @JoinColumn(foreignKey = @ForeignKey(name = Constraint.fk_item__venda))
     @ManyToOne
     private Venda venda;
 

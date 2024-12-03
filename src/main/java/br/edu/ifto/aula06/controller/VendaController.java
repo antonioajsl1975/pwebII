@@ -3,9 +3,7 @@ package br.edu.ifto.aula06.controller;
 import br.edu.ifto.aula06.model.entity.PessoaFisica;
 import br.edu.ifto.aula06.model.entity.PessoaJuridica;
 import br.edu.ifto.aula06.model.entity.Venda;
-import br.edu.ifto.aula06.model.repository.ItemVendaRepository;
-import br.edu.ifto.aula06.model.repository.PessoaFisicaRepository;
-import br.edu.ifto.aula06.model.repository.VendaRepository;
+import br.edu.ifto.aula06.model.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,15 +23,17 @@ public class VendaController {
     private VendaRepository vendaRepository;
 
     @Autowired
-    private ItemVendaRepository itemVendaRepository;
-
+    private PessoaJuridicaRepository pessoaJuridicaRepository;
     @Autowired
-    private PessoaFisicaRepository PessoaFisicaRepository;
+    private ProdutoRepository produtoRepository;
+    @Autowired
+    private PessoaFisicaRepository pessoaFisicaRepository;
 
     @GetMapping("/form")
     public String form(Venda venda, ModelMap model) {
         model.addAttribute("venda", venda);
-        model.addAttribute("itemVenda", itemVendaRepository.itensVenda());
+        model.addAttribute("clientespf", pessoaFisicaRepository.findAll());
+        model.addAttribute("clientespj", pessoaJuridicaRepository.findAll());
         return "venda/form";
     }
 
@@ -54,6 +54,11 @@ public class VendaController {
 
     @PostMapping("/save")
     public ModelAndView save(@ModelAttribute Venda venda) {
+        if ("pessoafisica".equals(venda.getTipoPessoa())) {
+            venda.setPessoa(pessoaFisicaRepository.findById(venda.getPessoa().getId()));
+        } else if ("pessoajuridica".equals(venda.getPessoa())) {
+            venda.setPessoa(pessoaJuridicaRepository.findById(venda.getPessoa().getId()));
+        }
         vendaRepository.save(venda);
         return new ModelAndView("redirect:/venda/list");
     }

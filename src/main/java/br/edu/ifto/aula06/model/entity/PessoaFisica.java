@@ -1,11 +1,11 @@
 package br.edu.ifto.aula06.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import br.edu.ifto.aula06.model.utils.Constraint;
+import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(uniqueConstraints = {@UniqueConstraint(name = Constraint.uc_pessoafisica__cpf, columnNames = "cpf")})
 public class PessoaFisica extends Pessoa {
     private String cpf;
     private String nome;

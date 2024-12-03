@@ -1,5 +1,6 @@
 package br.edu.ifto.aula06.model.entity;
 
+import br.edu.ifto.aula06.model.utils.Constraint;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,9 @@ public class Venda {
     private List<ItemVenda> itensVenda = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "pessoa_id", nullable = false)
+    @JoinColumn(
+            name = "pessoa_id", nullable = false,
+            foreignKey = @ForeignKey(name = Constraint.fk_venda__pessoa))
     private Pessoa pessoa;
 
     @Transient

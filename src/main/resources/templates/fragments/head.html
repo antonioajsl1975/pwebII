@@ -1,5 +1,5 @@
 
-<head th:fragment="head(links)">
+<head th:fragment="head(titulo, links)">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no"/>
 
@@ -8,5 +8,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <th:block th:replace="${links}"/>
+
+    <title th:text="${titulo}"></title>
 
 </head>
