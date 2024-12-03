@@ -46,4 +46,6 @@ public abstract class Pessoa {
     }
 
     public abstract String getNomeOuRazaoSocial();
+
+    public abstract String getCpfOuCnpj();
 }

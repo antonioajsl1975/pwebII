@@ -1,5 +1,6 @@
 package br.edu.ifto.aula07.model.repository;
 
+import br.edu.ifto.aula07.model.entity.Pessoa;
 import br.edu.ifto.aula07.model.entity.PessoaFisica;
 import br.edu.ifto.aula07.model.entity.PessoaJuridica;
 import jakarta.persistence.EntityManager;
@@ -8,6 +9,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -37,6 +39,13 @@ public class PessoaJuridicaRepository {
     public void deleteById(Long id) {
         PessoaJuridica pessoaJuridica = em.find(PessoaJuridica.class, id);
         em.remove(pessoaJuridica);
+    }
+
+    public List<PessoaJuridica> findByRazaoSocial(String razaoSocial) {
+        String hql = "from PessoaJuridica pj where pj.razaoSocial like :razaoSocial";
+        Query query = em.createQuery(hql);
+        query.setParameter("razaoSocial", "%" + razaoSocial + "%");
+        return query.getResultList();
     }
 }
 

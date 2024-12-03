@@ -1,22 +1,21 @@
 package br.edu.ifto.aula07.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.edu.ifto.aula07.model.utils.Constraint;
+import jakarta.persistence.*;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = Constraint.uc_produto__descricao, columnNames = "descricao")})
 public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private String descricao;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal valor;
 
     public Produto() {}

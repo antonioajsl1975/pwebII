@@ -2,16 +2,17 @@
 
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head th:replace="~{fragments/head :: head(~{})}">
+<head th:replace="~{fragments/head :: head('Lista de Vendas',~{})}">
     <title>Lista de Vendas</title>
 </head>
 
 <body>
+
 <main>
-    <div class="container mt-5">
+    <div class="container mt-5 border p-3 rounded">
         <h2>Lista de Vendas</h2>
         <div th:replace="~{fragments/msgerro :: msgerro}"></div>
-        <form th:action="@{/venda/list}"  method="get">
+        <form th:action="@{/venda/list}" class="border p-3 rounded" method="get">
             <input type="hidden" name="filtered" value="true" />
             <div class="row">
                 <div class="col-md-2">
@@ -33,6 +34,7 @@
                 <th>Id</th>
                 <th>Data</th>
                 <th>Cliente</th>
+                <th>CPF/CNPJ</th>
                 <th>Total</th>
                 <th>Detalhes</th>
             </tr>
@@ -42,6 +44,7 @@
                 <td th:text="${venda.id}"></td>
                 <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy HH:mm:ss')}"></td>
                 <td th:text="${venda.pessoa.getNomeOuRazaoSocial()}"></td>
+                <td th:text="${venda.pessoa.getCpfOuCnpj()}"></td>
                 <td th:text="${#numbers.formatCurrency(venda.totalVenda())}"></td>
                 <td>
                     <a th:href="@{/venda/detail/{id}(id=${venda.id})}" class="btn btn-primary" style="cursor: pointer;">itens</a>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Lista de Clientes',~{})}"></head>
+
+<body>
+<main>
+    <div class="container mt-5 border p-3 rounded">
+        <h2>Lista de Clientes</h2>
+        <form th:action="@{/pessoa/list}" class="border p-3 rounded" method="get">
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" name="nomeRazaoSocial" class="form-control" placeholder="Nome ou razão social" th:value="${param.nomeRazaoSocial}">
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome/Razão Social</th>
+                <th>CPF/CNPJ</th>
+                <th>Telefone</th>
+                <th>E-Mail</th>
+                <th colspan="2" class="text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pessoa : ${pessoas}">
+                <td th:text="${pessoa.id}"></td>
+                <td th:text="${pessoa.getNomeOuRazaoSocial()}"></td>
+                <td th:text="${pessoa.getCpfOuCnpj()}"></td>
+                <td th:text="${pessoa.telefone}"></td>
+                <td th:text="${pessoa.email}"></td>
+                <td class="text-center">
+                    <!--                    <a th:href="@{/pessoa/edit/{id}(id=${pf.id})}" class="btn btn-primary">Editar</a>-->
+                </td>
+                <td class="text-center">
+                    <!--                    <a th:href="@{/pessoa/delete/{id}(id=${pf.id})}"-->
+                    <!--                       class="btn btn-danger"-->
+                    <!--                       onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

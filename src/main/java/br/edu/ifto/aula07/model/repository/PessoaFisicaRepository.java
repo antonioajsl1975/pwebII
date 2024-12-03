@@ -7,6 +7,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -36,6 +37,13 @@ public class PessoaFisicaRepository {
     public void deleteById(Long id) {
         PessoaFisica pessoaFisica = em.find(PessoaFisica.class, id);
         em.remove(pessoaFisica);
+    }
+
+    public List<PessoaFisica> findByNome(String nome) {
+        String hql = "from PessoaFisica pf where pf.nome like :nome";
+        Query query = em.createQuery(hql);
+        query.setParameter("nome", "%" + nome + "%"); // Adicionando o '%', para que a busca seja por correspondência parcial
+        return query.getResultList();
     }
 }
 

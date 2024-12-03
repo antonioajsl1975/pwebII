@@ -1,10 +1,10 @@
 package br.edu.ifto.aula07.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import br.edu.ifto.aula07.model.utils.Constraint;
+import jakarta.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = Constraint.uc_pessoafisica__cpf, columnNames = "cpf")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PessoaFisica extends Pessoa {
     private String cpf;
@@ -30,5 +30,10 @@ public class PessoaFisica extends Pessoa {
     @Override
     public String getNomeOuRazaoSocial() {
         return this.nome;
+    }
+
+    @Override
+    public String getCpfOuCnpj() {
+        return this.cpf;
     }
 }

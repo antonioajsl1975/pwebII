@@ -59,9 +59,6 @@ public class VendaRepository {
         if (dataFim != null) {
             query.setParameter("dataFim", dataFim);
         }
-
         return query.getResultList();
     }
-
-
 }

@@ -38,7 +38,7 @@ public class VendaController {
     @GetMapping("/list")
     public ModelAndView listar(@RequestParam(required = false) String dataInicio,
                                @RequestParam(required = false) String dataFim, Boolean filtered,
-                               ModelMap model){
+                               ModelMap model) {
         String errorMessage = null;
         if (filtered != null && filtered) {
             if (dataInicio == null || dataInicio.isEmpty()) {
@@ -60,20 +60,24 @@ public class VendaController {
 
         List<Venda> vendas = vendaRepository.findAll(startDate, endDate);
 
-        for (Venda venda : vendas) {
-            if (venda.getPessoa() instanceof PessoaFisica){
-                venda.setTipoPessoa("Pessoafisica");
-            } else if (venda.getPessoa() instanceof PessoaJuridica) {
-                venda.setTipoPessoa("Pessoajuridica");
+        if (vendas.isEmpty()) {
+            errorMessage = "Não há vendas para o período pesquisado";
+        } else {
+
+            for (Venda venda : vendas) {
+                if (venda.getPessoa() instanceof PessoaFisica) {
+                    venda.setTipoPessoa("Pessoafisica");
+                } else if (venda.getPessoa() instanceof PessoaJuridica) {
+                    venda.setTipoPessoa("Pessoajuridica");
+                }
             }
         }
 
         model.addAttribute("vendas", vendas);
-        model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("errorMessage", errorMessage); // Adiciona a mensagem de erro à model
 
         return new ModelAndView("venda/list", model);
     }
-
 
     @PostMapping("/save")
     public ModelAndView save(@ModelAttribute Venda venda) {
