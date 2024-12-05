@@ -40,7 +40,7 @@ public class PessoaFisicaRepository {
     }
 
     public List<PessoaFisica> findByNome(String nome) {
-        String hql = "from PessoaFisica pf where pf.nome like :nome";
+        String hql = "from PessoaFisica pf where lower(pf.nome) like lower(:nome)";
         Query query = em.createQuery(hql);
         query.setParameter("nome", "%" + nome + "%"); // Adicionando o '%', para que a busca seja por correspondência parcial
         return query.getResultList();

@@ -3,17 +3,20 @@ package br.edu.ifto.aula07.controller;
 import br.edu.ifto.aula07.model.entity.PessoaFisica;
 import br.edu.ifto.aula07.model.entity.PessoaJuridica;
 import br.edu.ifto.aula07.model.entity.Venda;
-import br.edu.ifto.aula07.model.repository.*;
+import br.edu.ifto.aula07.model.repository.PessoaFisicaRepository;
+import br.edu.ifto.aula07.model.repository.PessoaJuridicaRepository;
+import br.edu.ifto.aula07.model.repository.VendaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Transactional
 @Controller
@@ -37,17 +40,10 @@ public class VendaController {
 
     @GetMapping("/list")
     public ModelAndView listar(@RequestParam(required = false) String dataInicio,
-                               @RequestParam(required = false) String dataFim, Boolean filtered,
+                               @RequestParam(required = false) String dataFim,
+                               @RequestParam(required = false) Long clienteId,
                                ModelMap model) {
         String errorMessage = null;
-        if (filtered != null && filtered) {
-            if (dataInicio == null || dataInicio.isEmpty()) {
-                if (dataFim == null || dataFim.isEmpty()) {
-                    errorMessage = "Informe as datas de início e de fim!";
-                }
-            }
-        }
-
         LocalDateTime startDate = null;
         LocalDateTime endDate = null;
 
@@ -58,10 +54,10 @@ public class VendaController {
             endDate = LocalDateTime.parse(dataFim + "T23:59:59");
         }
 
-        List<Venda> vendas = vendaRepository.findAll(startDate, endDate);
+        List<Venda> vendas = vendaRepository.findAll(startDate, endDate, clienteId);
 
         if (vendas.isEmpty()) {
-            errorMessage = "Não há vendas para o período pesquisado";
+            errorMessage = "Não há vendas este cliente no período pesquisado";
         } else {
 
             for (Venda venda : vendas) {
@@ -76,6 +72,9 @@ public class VendaController {
         model.addAttribute("vendas", vendas);
         model.addAttribute("errorMessage", errorMessage); // Adiciona a mensagem de erro à model
 
+        List<PessoaFisica> clientepf = pessoaFisicaRepository.findAll();
+        List<PessoaJuridica> clientespj = pessoaJuridicaRepository.findAll();
+        model.addAttribute("clientes", Stream.concat(clientepf.stream(), clientespj.stream()).collect(Collectors.toList()));
         return new ModelAndView("venda/list", model);
     }
 
@@ -113,12 +112,5 @@ public class VendaController {
         Venda venda = vendaRepository.venda(id);
         model.addAttribute("detail", venda);
         return new ModelAndView("/venda/detail", model);
-    }
-
-    @GetMapping("/date")
-    public String date(Model model) {
-        LocalDateTime agora = LocalDateTime.now();
-        model.addAttribute("dataVenda", agora);
-        return "date";
     }
 }

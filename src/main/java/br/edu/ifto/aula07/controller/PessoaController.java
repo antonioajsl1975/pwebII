@@ -28,8 +28,8 @@ public class PessoaController {
 
     @GetMapping("/list")
     public ModelAndView listar(@RequestParam(value = "nomeRazaoSocial", required = false) String nomeRazaoSocial, ModelMap model) {
-        List<PessoaFisica> pessoasFisicas = new ArrayList<>();
-        List<PessoaJuridica> pessoasJuridicas = new ArrayList<>();
+        List<PessoaFisica> pessoasFisicas;
+        List<PessoaJuridica> pessoasJuridicas;
 
         if (nomeRazaoSocial != null && !nomeRazaoSocial.isEmpty()) {
             pessoasFisicas = pessoaFisicaRepository.findByNome(nomeRazaoSocial);
@@ -39,7 +39,6 @@ public class PessoaController {
             pessoasJuridicas = pessoaJuridicaRepository.findAll();
         }
 
-        // Combina as listas de pessoas físicas e jurídicas
         List<Pessoa> pessoas = new ArrayList<>();
         pessoas.addAll(pessoasFisicas);
         pessoas.addAll(pessoasJuridicas);

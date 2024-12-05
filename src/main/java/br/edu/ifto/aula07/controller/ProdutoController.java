@@ -6,12 +6,11 @@ import br.edu.ifto.aula07.model.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("produto")
@@ -23,8 +22,14 @@ public class ProdutoController {
     ItemVendaRepository itemVendaRepository;
 
     @GetMapping("/list")
-    public ModelAndView listar(ModelMap model) {
-        model.addAttribute("produtos", produtoRepository.produtos());
+    public ModelAndView listar(@RequestParam(value = "descricao", required = false) String descricao, ModelMap model) {
+        List<Produto> produtos;
+        if (descricao != null && !descricao.isEmpty()) {
+            produtos = produtoRepository.findByDescricao(descricao);
+        } else {
+            produtos = produtoRepository.produtos();
+        }
+        model.addAttribute("produtos", produtos);
         return new ModelAndView("/produto/list");
     }
 

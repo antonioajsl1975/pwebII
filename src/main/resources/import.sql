@@ -29,6 +29,7 @@ INSERT INTO produto (descricao, valor) VALUES ('Leite Integral 1L', 4.30);
 INSERT INTO venda (data_venda, pessoa_id) VALUES ('2024-11-21T09:30:00', 1);
 INSERT INTO venda (data_venda, pessoa_id) VALUES ('2024-11-22T10:45:30', 2);
 INSERT INTO venda (data_venda, pessoa_id) VALUES ('2024-11-23T15:00:00', 5);
+INSERT INTO venda (data_venda, pessoa_id) VALUES ('2024-12-23T15:00:00', 5);
 
 INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (2.0, 1, 1); -- 2 pacotes de Arroz na primeira venda
 INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (1.0, 2, 1); -- 1 pacote de Feijão na primeira venda
@@ -37,4 +38,8 @@ INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (1.0, 4, 2); --
 INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (2.0, 5, 2); -- 2 pacotes de Café na segunda venda
 INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (3.0, 6, 2); -- 3 pacotes de Macarrão na segunda venda
 INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (1.0, 7, 3); -- 1 pacote de Farinha de Trigo na terceira venda
+INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (1.0, 2, 3); -- 1 pacote de Farinha de Trigo na terceira venda
+INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (2.0, 8, 4);
+INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (6.0, 1, 4);
+INSERT INTO item_venda (quantidade, produto_id, venda_id) VALUES (3.0, 5, 4);
 

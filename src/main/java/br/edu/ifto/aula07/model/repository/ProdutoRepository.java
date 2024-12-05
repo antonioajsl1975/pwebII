@@ -39,4 +39,11 @@ public class ProdutoRepository {
     public void update(Produto produto) {
         em.merge(produto);
     }
+
+    public List<Produto> findByDescricao(String descricao) {
+        String hql = "from Produto p where lower(p.descricao) like lower(:descricao)";
+        Query query = em.createQuery(hql);
+        query.setParameter("descricao", "%" + descricao + "%");
+        return query.getResultList();
+    }
 }

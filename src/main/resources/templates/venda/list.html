@@ -13,8 +13,14 @@
         <h2>Lista de Vendas</h2>
         <div th:replace="~{fragments/msgerro :: msgerro}"></div>
         <form th:action="@{/venda/list}" class="border p-3 rounded" method="get">
-            <input type="hidden" name="filtered" value="true" />
             <div class="row">
+                <div class="col-md-2">
+                    <label for="clienteId">Cliente</label>
+                    <select id="clienteId" name="clienteId" class="form-control">
+                        <option value="">Todos</option>
+                        <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.getNomeOuRazaoSocial()}"></option>
+                    </select>
+                </div>
                 <div class="col-md-2">
                     <label for="dataInicio">Data Inicial</label>
                     <input type="date" id="dataInicio" name="dataInicio" class="form-control">

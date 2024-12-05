@@ -42,7 +42,7 @@ public class PessoaJuridicaRepository {
     }
 
     public List<PessoaJuridica> findByRazaoSocial(String razaoSocial) {
-        String hql = "from PessoaJuridica pj where pj.razaoSocial like :razaoSocial";
+        String hql = "from PessoaJuridica pj where lower(pj.razaoSocial) like lower(:razaoSocial)";
         Query query = em.createQuery(hql);
         query.setParameter("razaoSocial", "%" + razaoSocial + "%");
         return query.getResultList();

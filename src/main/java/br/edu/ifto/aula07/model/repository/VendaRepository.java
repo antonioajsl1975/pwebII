@@ -40,15 +40,18 @@ public class VendaRepository {
         em.merge(Venda);
     }
 
-    public List<Venda> findAll(LocalDateTime dataInicio, LocalDateTime dataFim) {
+    public List<Venda> findAll(LocalDateTime dataInicio, LocalDateTime dataFim, Long clienteId) {
 
-        String hql = "SELECT v FROM Venda v JOIN FETCH v.pessoa WHERE 1=1";
+        String hql = "from Venda v join fetch v.pessoa where 1=1";
 
         if (dataInicio != null) {
-            hql += " AND v.dataVenda >= :dataInicio";
+            hql += " and v.dataVenda >= :dataInicio";
         }
         if (dataFim != null) {
-            hql += " AND v.dataVenda <= :dataFim";
+            hql += " and v.dataVenda <= :dataFim";
+        }
+        if (clienteId != null) {
+            hql += " and v.pessoa.id = :clienteId";
         }
 
         Query query = em.createQuery(hql);
@@ -58,6 +61,9 @@ public class VendaRepository {
         }
         if (dataFim != null) {
             query.setParameter("dataFim", dataFim);
+        }
+        if (clienteId != null) {
+            query.setParameter("clienteId", clienteId);
         }
         return query.getResultList();
     }
