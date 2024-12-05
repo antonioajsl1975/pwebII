@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.edu.ifto</groupId>
-	<artifactId>aula07</artifactId>
+	<artifactId>aula08</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>aula07</name>
-	<description>Spring boot, com jpa, thymeleaf e hql</description>
+	<name>aula08</name>
+	<description>Spring boot, com jpa, thymeleaf e hql - carrinho</description>
 	<url/>
 	<licenses>
 		<license/>

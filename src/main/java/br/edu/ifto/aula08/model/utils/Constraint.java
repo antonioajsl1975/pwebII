@@ -1,4 +1,4 @@
-package br.edu.ifto.aula07.model.utils;
+package br.edu.ifto.aula08.model.utils;
 
 public class Constraint {
 

@@ -1,7 +1,7 @@
-package br.edu.ifto.aula07.controller;
+package br.edu.ifto.aula08.controller;
 
-import br.edu.ifto.aula07.model.entity.PessoaFisica;
-import br.edu.ifto.aula07.model.repository.PessoaFisicaRepository;
+import br.edu.ifto.aula08.model.entity.PessoaFisica;
+import br.edu.ifto.aula08.model.repository.PessoaFisicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

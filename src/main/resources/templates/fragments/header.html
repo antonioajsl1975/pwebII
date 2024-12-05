@@ -2,7 +2,9 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Minha Aplicação</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -13,15 +15,8 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/produto/list}">Produtos</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Clientes
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/pessoafisica/list}">Pessoa Física</a></li>
-                            <li><a class="dropdown-item" th:href="@{/pessoajuridica/list}">Pessoa Jurídica</a></li>
-                            <li><a class="dropdown-item" th:href="@{/pessoa/list}">PF e PJ</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/pessoa/list}">Clientes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/venda/list}">Vendas</a>

@@ -1,4 +1,4 @@
-package br.edu.ifto.aula07;
+package br.edu.ifto.aula08;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

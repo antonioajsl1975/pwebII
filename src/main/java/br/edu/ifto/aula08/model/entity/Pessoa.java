@@ -1,4 +1,4 @@
-package br.edu.ifto.aula07.model.entity;
+package br.edu.ifto.aula08.model.entity;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
-package br.edu.ifto.aula07.model.entity;
+package br.edu.ifto.aula08.model.entity;
 
-import br.edu.ifto.aula07.model.utils.Constraint;
+import br.edu.ifto.aula08.model.utils.Constraint;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;

@@ -1,8 +1,8 @@
-package br.edu.ifto.aula07.controller;
+package br.edu.ifto.aula08.controller;
 
-import br.edu.ifto.aula07.model.entity.Produto;
-import br.edu.ifto.aula07.model.repository.ItemVendaRepository;
-import br.edu.ifto.aula07.model.repository.ProdutoRepository;
+import br.edu.ifto.aula08.model.entity.Produto;
+import br.edu.ifto.aula08.model.repository.ItemVendaRepository;
+import br.edu.ifto.aula08.model.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

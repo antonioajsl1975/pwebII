@@ -1,11 +1,11 @@
-package br.edu.ifto.aula07.controller;
+package br.edu.ifto.aula08.controller;
 
-import br.edu.ifto.aula07.model.entity.PessoaFisica;
-import br.edu.ifto.aula07.model.entity.PessoaJuridica;
-import br.edu.ifto.aula07.model.entity.Venda;
-import br.edu.ifto.aula07.model.repository.PessoaFisicaRepository;
-import br.edu.ifto.aula07.model.repository.PessoaJuridicaRepository;
-import br.edu.ifto.aula07.model.repository.VendaRepository;
+import br.edu.ifto.aula08.model.entity.PessoaFisica;
+import br.edu.ifto.aula08.model.entity.PessoaJuridica;
+import br.edu.ifto.aula08.model.entity.Venda;
+import br.edu.ifto.aula08.model.repository.PessoaFisicaRepository;
+import br.edu.ifto.aula08.model.repository.PessoaJuridicaRepository;
+import br.edu.ifto.aula08.model.repository.VendaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

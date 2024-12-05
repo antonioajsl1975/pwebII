@@ -1,13 +1,12 @@
-package br.edu.ifto.aula07.model.repository;
+package br.edu.ifto.aula08.model.repository;
 
-import br.edu.ifto.aula07.model.entity.PessoaFisica;
+import br.edu.ifto.aula08.model.entity.PessoaFisica;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 
 @Repository

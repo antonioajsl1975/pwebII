@@ -1,7 +1,7 @@
-package br.edu.ifto.aula07.controller;
+package br.edu.ifto.aula08.controller;
 
-import br.edu.ifto.aula07.model.entity.PessoaJuridica;
-import br.edu.ifto.aula07.model.repository.PessoaJuridicaRepository;
+import br.edu.ifto.aula08.model.entity.PessoaJuridica;
+import br.edu.ifto.aula08.model.repository.PessoaJuridicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
