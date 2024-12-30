@@ -7,8 +7,8 @@
 <body>
 
 <main>
-    <div class="container mt-5 border p-3 rounded table-responsive">
-        <h4>Catálogo de Produtos</h4>
+    <div class="container mt-5 table-responsive">
+        <h5>Catálogo de Produtos</h5>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div th:each="catalogo : ${catalogo}" class="col">
@@ -17,9 +17,9 @@
                         <p class="card-text" th:text="${catalogo.descricao}"></p>
                         <p class="card-text"><strong>R$ <span th:text="${catalogo.valor}"></span></strong></p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer border-0">
                         <a th:href="@{/venda/adicionaCarrinho/{id}(id=${catalogo.id})}"
-                           class="btn btn-outline-success position-relative">
+                           class="btn btn-outline-success w-100 px-2 position-relative">
                             + Add ao Carrinho
                         </a>
                     </div>

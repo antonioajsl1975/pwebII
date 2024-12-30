@@ -7,16 +7,16 @@
 <body>
 
 <main>
-  <div class="container mt-5">
-    <h4>Cadastro de Departamento</h4>
+  <div class="container mt-5 border mt-3 rounded shadow">
+    <h5 class="mt-3">Cadastro de Departamento</h5>
     <form th:action="${departamento.id == null} ? @{/departamento/save} : @{/departamento/update}"
           th:object="${departamento}" method="post">
       <div class="form-row">
-        <div class="mb-2 col-lg-4">
+        <div class="mb-3">
           <input type="hidden" th:field="*{id}">
           <input class="form-control" type="text" th:field="*{nome}" placeholder="Nome">
         </div>
-        <div class="mb-2 col-lg-4">
+        <div class="mb-2 col-lg-4 mb-3">
           <button class="btn btn-outline-success">Enviar</button>
         </div>
       </div>

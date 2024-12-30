@@ -7,8 +7,8 @@
 
 <body>
 <main>
-    <div class="container mt-5">
-        <h2>Cadastro de Clientes PJ</h2>
+    <div class="container mt-5 border p-3 rounded shadow">
+        <h5>Cadastro de Clientes PJ</h5>
         <form th:action="@{/pessoajuridica/save}" th:object="${pessoajuridica}" method="post">
             <div class="form-row">
                 <div class="mb-2 col-lg-4">
@@ -24,7 +24,7 @@
                 <div class="mb-2 col-lg-4">
                     <input class="form-control" type="text" th:field="*{cnpj}" placeholder="CNPJ">
                 </div>
-                <div class="mb-2 col-lg-4">
+                <div class="mb-2 col-lg-4 mt-3">
                     <button class="btn btn-outline-success">Enviar</button>
                 </div>
             </div>

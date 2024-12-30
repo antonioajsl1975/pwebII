@@ -7,8 +7,8 @@
 <body>
 
 <main>
-    <div class="container mt-5 border p-3 rounded">
-        <h2>Lista de Clientes PJ</h2>
+    <div class="container mt-5 border p-3 rounded shadow">
+        <h5>Lista de Clientes PJ</h5>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -28,11 +28,11 @@
                 <td th:text="${pj.telefone}"></td>
                 <td th:text="${pj.email}"></td>
                 <td class="text-center">
-                    <a th:href="@{/pessoajuridica/edit/{id}(id=${pj.id})}" class="btn btn-primary">Editar</a>
+                    <a th:href="@{/pessoajuridica/edit/{id}(id=${pj.id})}" class="btn btn-outline-primary">Editar</a>
                 </td>
                 <td class="text-center">
                     <a th:href="@{/pessoajuridica/delete/{id}(id=${pj.id})}"
-                       class="btn btn-danger"
+                       class="btn btn-outline-danger"
                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
                 </td>
             </tr>

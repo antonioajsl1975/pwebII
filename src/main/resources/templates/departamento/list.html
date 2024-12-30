@@ -8,10 +8,10 @@
 <body>
 
 <main>
-    <div class="container mt-5 border p-3 rounded">
-        <h4>Lista de Departamentos</h4>
+    <div class="container mt-5 border p-3 rounded shadow">
+        <h5>Lista de Departamentos</h4>
         <div th:replace="~{fragments/msgerro :: msgerro}"></div>
-        <form th:action="@{/departamento/list}" class="border p-3 rounded" method="get">
+        <form th:action="@{/departamento/list}" class="border p-3 rounded shadow" method="get">
             <div class="row">
                 <div class="col-md-4">
                     <input type="text" name="nome" class="form-control" placeholder="Nome" th:value="${param.nome}">

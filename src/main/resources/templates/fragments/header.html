@@ -1,11 +1,6 @@
 <header class="container" th:fragment="header">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg rounded mt-2 bg-body-tertiary shadow">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -23,22 +18,32 @@
                             <li><a class="dropdown-item" th:href="@{/produto/list}">Lista</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Clientes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/pessoafisica/list}">Pessoa Física</a></li>
+                            <li><a class="dropdown-item" th:href="@{/pessoajuridica/list}">Pessoa Jurídica</a></li>
+                            <li><a class="dropdown-item" th:href="@{/pessoa/list}">Todos</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/pessoa/list}">Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Funcionários</a>
+<!--                        <a class="nav-link" href="#">Funcionários</a>-->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/venda/list}">Vendas</a>
                     </li>
                 </ul>
 
-                <ul class="navbar-nav ms-3">
+                <ul class="navbar-nav ms-3 me-1">
                     <li class="nav-item position-relative">
                         <a class="nav-link" th:href="@{/venda/carrinho}">
                             <i class="bi bi-cart" style="font-size: 1.3rem;">Carrinho</i>
-                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+                            <span class="badge bg-danger position-absolute top-0 start-100translate-middle"
                                   th:text="${cartItemCount}"></span>
                         </a>
                     </li>
