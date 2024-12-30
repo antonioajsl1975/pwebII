@@ -8,7 +8,7 @@
 
 <main>
     <div class="container mt-5 border p-3 rounded">
-        <h2>Lista de Clientes PF</h2>
+        <h4>Lista de Clientes PF</h4>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -28,11 +28,11 @@
                 <td th:text="${pf.telefone}"></td>
                 <td th:text="${pf.email}"></td>
                 <td class="text-center">
-                    <a th:href="@{/pessoafisica/edit/{id}(id=${pf.id})}" class="btn btn-primary">Editar</a>
+                    <a th:href="@{/pessoafisica/edit/{id}(id=${pf.id})}" class="btn btn-outline-primary">Editar</a>
                 </td>
                 <td class="text-center">
                     <a th:href="@{/pessoafisica/delete/{id}(id=${pf.id})}"
-                       class="btn btn-danger"
+                       class="btn btn-outline-danger"
                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
                 </td>
             </tr>

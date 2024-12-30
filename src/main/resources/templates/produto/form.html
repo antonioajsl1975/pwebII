@@ -8,7 +8,7 @@
 
 <main>
   <div class="container mt-5">
-    <h2>Cadastro de Produto</h2>
+    <h4>Cadastro de Produto</h4>
     <form th:action="${produto.id == null} ? @{/produto/save} : @{/produto/update}"
           th:object="${produto}" method="post">
       <div class="form-row">

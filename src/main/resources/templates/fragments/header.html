@@ -1,7 +1,6 @@
 <header class="container" th:fragment="header">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Minha Aplicação</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -10,26 +9,37 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/venda/list}">Home</a>
+                        <a class="nav-link" th:href="@{/produto/catalogo}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/produto/list}">Produtos</a>
+                        <a class="nav-link" th:href="@{/departamento/list}">Departamentos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Produtos
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/produto/catalogo}">Catálogo</a></li>
+                            <li><a class="dropdown-item" th:href="@{/produto/list}">Lista</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/pessoa/list}">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Funcionários</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/venda/list}">Vendas</a>
                     </li>
                 </ul>
 
-                <!-- Carrinho de Compras com Ícone -->
                 <ul class="navbar-nav ms-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/carrinho">
-                            <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-                            <!-- Exibe o número de itens no carrinho -->
-                            <span class="badge bg-danger" th:text="${cartItemCount}">0</span>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" th:href="@{/venda/carrinho}">
+                            <i class="bi bi-cart" style="font-size: 1.3rem;">Carrinho</i>
+                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+                                  th:text="${cartItemCount}"></span>
                         </a>
                     </li>
                 </ul>

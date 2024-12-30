@@ -7,15 +7,15 @@
 <body>
 <main>
     <div class="container mt-5 border p-3 rounded">
-        <h2>Lista de Clientes</h2>
+        <h4>Lista de Clientes</h4>
         <form th:action="@{/pessoa/list}" class="border p-3 rounded" method="get">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <input type="text" name="nomeRazaoSocial" class="form-control" placeholder="Nome ou razão social" th:value="${param.nomeRazaoSocial}">
                 </div>
 
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <button type="submit" class="btn btn-outline-primary">Buscar</button>
                 </div>
             </div>
         </form>
@@ -28,7 +28,7 @@
                 <th>CPF/CNPJ</th>
                 <th>Telefone</th>
                 <th>E-Mail</th>
-                <th colspan="2" class="text-center">Ações</th>
+<!--                <th colspan="2" class="text-center">Ações</th>-->
             </tr>
             </thead>
             <tbody>
@@ -38,14 +38,14 @@
                 <td th:text="${pessoa.getCpfOuCnpj()}"></td>
                 <td th:text="${pessoa.telefone}"></td>
                 <td th:text="${pessoa.email}"></td>
-                <td class="text-center">
-                    <!--                    <a th:href="@{/pessoa/edit/{id}(id=${pf.id})}" class="btn btn-primary">Editar</a>-->
-                </td>
-                <td class="text-center">
-                    <!--                    <a th:href="@{/pessoa/delete/{id}(id=${pf.id})}"-->
-                    <!--                       class="btn btn-danger"-->
-                    <!--                       onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>-->
-                </td>
+<!--                <td class="text-center">-->
+<!--                                        <a th:href="@{/pessoa/edit/{id}(id=${pessoa.id})}" class="btn btn-primary">Editar</a>-->
+<!--                </td>-->
+<!--                <td class="text-center">-->
+<!--                                        <a th:href="@{/pessoa/delete/{id}(id=${pessoa.id})}"-->
+<!--                                           class="btn btn-danger"-->
+<!--                                           onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>-->
+<!--                </td>-->
             </tr>
             </tbody>
         </table>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Carrinho',~{})}"></head>
+
+<body>
+<main>
+    <div class="container mt-5 border p-3 rounded table-responsive">
+        <h4>Carrinho de Compras</h4>
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, status : ${session.venda?.itensVenda}">
+                        <td th:text="${status.index + 1}"></td>
+                        <td th:text="${item.produto.descricao}"></td>
+                        <td th:text="${#numbers.formatCurrency(item.preco)}"></td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-block"
+                               th:href="@{/venda/alterarQuantidade/{id}/{acao}(id=${item.produto.id},acao=${0})}"
+                               role="button"><i class="bi bi-dash"></i>
+                            </a>
+                            &nbsp;&nbsp;
+                            <span th:text="${item.quantidade}"></span>
+                            &nbsp;&nbsp;
+                            <a class="btn btn-outline-primary btn-block"
+                               th:href="@{/venda/alterarQuantidade/{id}/{acao}(id=${item.produto.id},acao=${1})}"
+                               role="button"><i class="bi bi-plus"></i>
+                            </a>
+                        </td>
+                        <td th:text="${#numbers.formatCurrency(item.totalItem())}"></td>
+                        <td>
+                            <a class="btn btn-outline-danger"
+                               th:href="@{/venda/removerProdutoCarrinho/{id}(id=${item.produto.id})}"
+                               role="button"><i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-end fw-bold">Total da Venda:</td>
+                        <td colspan="2" th:text="${#numbers.formatCurrency(session.venda?.totalVenda())}" class="fw-bold"></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="col-lg-4 border p-3 rounded">
+                <form th:action="@{/venda/finalizar}" method="post">
+                    <div class="col-md-8">
+                        <label for="pessoaId">Cliente</label>
+                        <select id="pessoaId" name="pessoaId" class="form-select">
+                            <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.getNomeOuRazaoSocial()}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success btn-block mt-3">Finalizar Venda</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</body>
+</html>

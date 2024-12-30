@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}" lang="pt-br">
+
+<head th:replace="~{fragments/head :: head('Lista de Departamentos',~{})}">
+</head>
+
+<body>
+
+<main>
+    <div class="container mt-5 border p-3 rounded">
+        <h4>Lista de Departamentos</h4>
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+        <form th:action="@{/departamento/list}" class="border p-3 rounded" method="get">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="nome" class="form-control" placeholder="Nome" th:value="${param.nome}">
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-outline-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-striped table-hover mt-5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+<!--                <th>Valor</th>-->
+                <th colspan="2" class="text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="departamento : ${departamentos}">
+                <td th:text="${departamento.id}"></td>
+                <td th:text="${departamento.nome}"></td>
+<!--                <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>-->
+                <td class="text-center">
+                    <a th:href="@{/departamento/edit/{id}(id=${departamento.id})}" class="btn btn-outline-primary">Editar</a>
+                </td>
+                <td class="text-center">
+                    <a th:href="@{/departamento/remove/{id}(id=${departamento.id})}" class="btn btn-outline-danger text-center" onclick="return confirm('Confirma a exclusão do departamento?')">Excluir</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-outline-success" th:onclick="|window.location.href='/departamento/form'|">Novo Departamento</button>
+    </div>
+</main>
+</body>
+</html>
