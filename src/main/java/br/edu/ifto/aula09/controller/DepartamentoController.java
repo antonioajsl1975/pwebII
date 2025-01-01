@@ -57,24 +57,6 @@ public class DepartamentoController {
         return new ModelAndView("/departamento/list");
     }
 
-//    @PostMapping("/save")
-//    public ModelAndView save(Departamento departamento) {
-//        departamentoRepository.save(departamento);
-//        return new ModelAndView("redirect:/departamento/list");
-//    }
-
-//    //@PathVariable é utilizado quando o valor da variável é passada diretamente na URL
-//    @GetMapping("/remove/{id}")
-//    public String remove(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-//        if (funcionarioRepository.existsByDepartamentoId(id)) {
-//            redirectAttributes.addFlashAttribute("errorMessage", "Não é possível excluir o departamento, pois ele está associado a um funcionário.");
-//            return "redirect:/funcionario/list";
-//        }
-//        departamentoRepository.deleteById(id);
-//        redirectAttributes.addFlashAttribute("successMessage", "Departamento excluído com sucesso!");
-//        return "redirect:/departamento/list";
-//    }
-
     //@PathVariable é utilizado quando o valor da variável é passada diretamente na URL
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {

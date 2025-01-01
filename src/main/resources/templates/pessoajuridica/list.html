@@ -24,7 +24,7 @@
             <tr th:each="pj : ${pessoasjuridicas}">
                 <td th:text="${pj.id}"></td>
                 <td th:text="${pj.razaoSocial}"></td>
-                <td th:text="${pj.cnpj}"></td>
+                <td th:text="${pj.getCnpjFormatado()}"></td>
                 <td th:text="${pj.telefone}"></td>
                 <td th:text="${pj.email}"></td>
                 <td class="text-center">

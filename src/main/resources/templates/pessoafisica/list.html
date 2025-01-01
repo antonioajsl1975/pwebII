@@ -12,19 +12,54 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Telefone</th>
-                <th>E-Mail</th>
+                <th>
+                    <a th:href="@{/pessoafisica/list(sort='id', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        Id
+                        <span th:if="${sort == 'id'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoafisica/list(sort='nome', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        Nome
+                        <span th:if="${sort == 'nome'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoafisica/list(sort='cpf', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        CPF
+                        <span th:if="${sort == 'cpf'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoafisica/list(sort='telefone', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        Telefone
+                        <span th:if="${sort == 'telefone'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoafisica/list(sort='email', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        E-mail
+                        <span th:if="${sort == 'email'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
                 <th colspan="2" class="text-center">Ações</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="pf : ${pessoasfisicas}">
+            <tr th:each="pf : ${pessoafisica}">
                 <td th:text="${pf.id}"></td>
-                <td th:text="${pf.nome}"></td>
-                <td th:text="${pf.cpf}"></td>
+                <td th:text="${pf.nomeOuRazaoSocial}"></td>
+                <td th:text="${pf.cpfOuCnpj}"></td>
                 <td th:text="${pf.telefone}"></td>
                 <td th:text="${pf.email}"></td>
                 <td class="text-center">

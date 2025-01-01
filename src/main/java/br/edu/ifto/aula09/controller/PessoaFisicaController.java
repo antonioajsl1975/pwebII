@@ -1,13 +1,18 @@
 package br.edu.ifto.aula09.controller;
 
+import br.edu.ifto.aula09.model.entity.Pessoa;
 import br.edu.ifto.aula09.model.entity.PessoaFisica;
 import br.edu.ifto.aula09.model.repository.PessoaFisicaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("pessoafisica")
@@ -17,9 +22,15 @@ public class PessoaFisicaController {
     private PessoaFisicaRepository pessoaFisicaRepository;
 
     @GetMapping("/list")
-    public ModelAndView listar(ModelMap model) {
-        model.addAttribute("pessoasfisicas", pessoaFisicaRepository.findAll());
-        return new ModelAndView("pessoafisica/list");
+    public String listar(
+            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "asc") String direction,
+            Model model) {
+        List<Pessoa> pessoasfisicas = pessoaFisicaRepository.findAllSorted(sort, direction);
+        model.addAttribute("pessoafisica", pessoasfisicas);
+        model.addAttribute("sort", sort);
+        model.addAttribute("direction", direction);
+        return "pessoafisica/list";
     }
 
     @GetMapping("/form")
@@ -34,9 +45,19 @@ public class PessoaFisicaController {
     }
 
     @PostMapping("/save")
-    public String save(PessoaFisica pessoaFisica) {
-        pessoaFisicaRepository.save(pessoaFisica);
-        return "redirect:/pessoafisica/list";
+    public String save(@Valid @ModelAttribute("pessoafisica") PessoaFisica pessoaFisica, BindingResult bindigResult, RedirectAttributes attributes) {
+        try {
+            if (bindigResult.hasErrors()) {
+                return "pessoafisica/form";
+            }
+
+            pessoaFisicaRepository.save(pessoaFisica);
+            attributes.addFlashAttribute("successMessage", "Cadastrado com sucesso!");
+            return "redirect:/pessoafisica/form";
+        } catch (DataIntegrityViolationException e){
+            bindigResult.rejectValue("cpf", "error.pessoafisica", "CPF já cadastrado");
+            return "pessoafisica/form";
+        }
     }
 
     @GetMapping("/edit/{id}")

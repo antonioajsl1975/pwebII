@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.model.repository;
 
+import br.edu.ifto.aula09.model.entity.Pessoa;
 import br.edu.ifto.aula09.model.entity.PessoaFisica;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -42,6 +43,19 @@ public class PessoaFisicaRepository {
         String hql = "from PessoaFisica pf where lower(pf.nome) like lower(:nome)";
         Query query = em.createQuery(hql);
         query.setParameter("nome", "%" + nome + "%"); // Adicionando o '%', para que a busca seja por correspondência parcial
+        return query.getResultList();
+    }
+
+    public List<Pessoa> findAllSorted(String sort, String direction) {
+        if (!List.of("id", "nome", "cpf", "telefone", "email").contains(sort)) {
+            sort = "id";
+        }
+        if (!direction.equalsIgnoreCase("asc") && !direction.equalsIgnoreCase("desc")) {
+            direction = "asc";
+        }
+
+        String jpql = "from Pessoa p ORDER BY p."+ sort + " " + direction;
+        Query query = em.createQuery(jpql);
         return query.getResultList();
     }
 }

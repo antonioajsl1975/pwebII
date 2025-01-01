@@ -1,6 +1,8 @@
 package br.edu.ifto.aula09.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +17,10 @@ public abstract class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Email
+    @NotBlank
     private String email;
+    @NotBlank
     private String telefone;
 
     @OneToMany(mappedBy = "pessoa", orphanRemoval = false)
