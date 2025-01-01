@@ -9,20 +9,25 @@
 <main>
     <div class="container mt-5 border p-3 rounded shadow">
         <h5>Cadastro de Clientes PJ</h5>
-        <form th:action="@{/pessoajuridica/save}" th:object="${pessoajuridica}" method="post">
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+        <form needs-validation th:action="@{/pessoajuridica/save}" th:object="${pessoajuridica}" method="post">
             <div class="form-row">
                 <div class="mb-2 col-lg-4">
                     <input type="hidden" th:field="*{id}">
-                    <input class="form-control" type="text" th:field="*{razaoSocial}" placeholder="Razão Social">
+                    <input class="form-control" type="text" th:field="*{razaoSocial}" th:errorclass="is-invalid" placeholder="Razão Social">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}"></div>
                 </div>
                 <div class="mb-2 col-lg-4">
-                    <input class="form-control" type="text" th:field="*{telefone}" placeholder="Telefone">
+                    <input class="form-control" type="text" th:field="*{telefone}" th:errorclass="is-invalid" placeholder="Telefone">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></div>
                 </div>
                 <div class="mb-2 col-lg-4">
-                    <input class="form-control" type="text" th:field="*{email}" placeholder="E-mail">
+                    <input class="form-control" type="email" th:field="*{email}" th:errorclass="is-invalid" placeholder="E-mail">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
                 <div class="mb-2 col-lg-4">
-                    <input class="form-control" type="text" th:field="*{cnpj}" placeholder="CNPJ">
+                    <input class="form-control" type="text" th:field="*{cnpj}" th:errorclass="is-invalid" placeholder="CNPJ">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></div>
                 </div>
                 <div class="mb-2 col-lg-4 mt-3">
                     <button class="btn btn-outline-success">Enviar</button>

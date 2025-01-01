@@ -68,10 +68,14 @@ public class PessoaFisicaController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id, RedirectAttributes attributes) {
         PessoaFisica pessoaFisica = pessoaFisicaRepository.findById(id);
-        if (pessoaFisica != null) {
+        try {
             pessoaFisicaRepository.deleteById(id);
+            attributes.addFlashAttribute("successMessage", "Deletado com sucesso!");
+
+        } catch (DataIntegrityViolationException e) {
+            attributes.addFlashAttribute("errorMessage", "Não é possível excluir: existem vendas associadas a esta pessoa.");
         }
         return "redirect:/pessoafisica/list";
     }

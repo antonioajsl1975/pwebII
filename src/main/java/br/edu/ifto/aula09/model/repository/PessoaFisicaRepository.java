@@ -53,8 +53,7 @@ public class PessoaFisicaRepository {
         if (!direction.equalsIgnoreCase("asc") && !direction.equalsIgnoreCase("desc")) {
             direction = "asc";
         }
-
-        String jpql = "from Pessoa p ORDER BY p."+ sort + " " + direction;
+        String jpql = "from PessoaFisica p ORDER BY p."+ sort + " " + direction;
         Query query = em.createQuery(jpql);
         return query.getResultList();
     }

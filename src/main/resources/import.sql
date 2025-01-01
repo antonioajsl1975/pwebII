@@ -7,15 +7,15 @@ INSERT INTO pessoa (email, telefone) VALUES ('y@outlook.com','51944443333');
 INSERT INTO pessoa (email, telefone) VALUES ('z@bol.com.br','61933332222');
 INSERT INTO pessoa (email, telefone) VALUES ('servicos@yahoo.com','71922221111');
 
-INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (1, 'João Silva', '12345678901');
-INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (2, 'Maria Oliveira', '98765432109');
-INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (3, 'Carlos Souza', '11122233344');
-INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (4, 'Ana Pereira', '44455566677');
+INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (1, 'João Silva', '16364885608');
+INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (2, 'Maria Oliveira', '56302864399');
+INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (3, 'Carlos Souza', '76954122017');
+INSERT INTO pessoa_fisica (id, nome, cpf) VALUES (4, 'Ana Pereira', '88855081977');
 
-INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (5, 'Empresa X LTDA', '01234567000189');
-INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (6, 'Empresa Y SA', '98765432000156');
-INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (7, 'Comércio Z ME', '12345678000101');
-INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (8, 'Serviços W LTDA', '23456789000112');
+INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (5, 'Empresa X LTDA', '71860375000170');
+INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (6, 'Empresa Y SA', '38710628000153');
+INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (7, 'Comércio Z ME', '62736225000168');
+INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (8, 'Serviços W LTDA', '30541116000107');
 
 INSERT INTO produto (descricao, valor) VALUES ('Arroz 1kg', 5.50);
 INSERT INTO produto (descricao, valor) VALUES ('Feijão 1kg', 6.80);

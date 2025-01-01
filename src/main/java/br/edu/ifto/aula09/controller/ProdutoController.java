@@ -1,11 +1,15 @@
 package br.edu.ifto.aula09.controller;
 
+import br.edu.ifto.aula09.model.entity.PessoaFisica;
 import br.edu.ifto.aula09.model.entity.Produto;
 import br.edu.ifto.aula09.model.repository.ItemVendaRepository;
 import br.edu.ifto.aula09.model.repository.ProdutoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,16 +55,26 @@ public class ProdutoController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(Produto produto) {
-        produtoRepository.save(produto);
-        return new ModelAndView("redirect:/produto/list");
+    public String save(@Valid @ModelAttribute("produto") Produto produto, BindingResult bindigResult, RedirectAttributes attributes) {
+        try {
+            if (bindigResult.hasErrors()) {
+                return "produto/form";
+            }
+
+            produtoRepository.save(produto);
+            attributes.addFlashAttribute("successMessage", "Salvo com sucesso!");
+            return "redirect:/produto/form";
+        } catch (DataIntegrityViolationException e){
+            bindigResult.rejectValue("descricao", "error.produto", "Já existe um produto com a descrição informada.");
+            return "produto/form";
+        }
     }
 
     //@PathVariable é utilizado quando o valor da variável é passada diretamente na URL
     @GetMapping("/remove/{id}")
     public String remove(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (itemVendaRepository.existsByProdutoId(id)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Não é possível excluir o produto, pois ele está associado a uma venda.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Impossível excluir. Produto está associado a uma venda.");
             return "redirect:/produto/list";
         }
         produtoRepository.deleteById(id);

@@ -45,13 +45,9 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
     @Override
     public String getCpfOuCnpj() {
-        return this.cpf;
-    }
-
-    public String getCpfFormatado() {
         if (cpf != null && cpf.length() == 11) {
             return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
         }
-        return cpf; // Retorna o CPF original se não for válido
+        return cpf;
     }
 }

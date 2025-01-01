@@ -9,14 +9,50 @@
 <main>
     <div class="container mt-5 border p-3 rounded shadow">
         <h5>Lista de Clientes PJ</h5>
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Id</th>
-                <th>Razão Social</th>
-                <th>CNPJ</th>
-                <th>Telefone</th>
-                <th>E-Mail</th>
+                <th>
+                    <a th:href="@{/pessoajuridica/list(sort='id', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        Id
+                        <span th:if="${sort == 'id'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoajuridica/list(sort='razaoSocial', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        Razão Social
+                        <span th:if="${sort == 'razaoSocial'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoajuridica/list(sort='cnpj', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        CNPJ
+                        <span th:if="${sort == 'cnpj'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoajuridica/list(sort='telefone', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        Telefone
+                        <span th:if="${sort == 'telefone'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/pessoajuridica/list(sort='email', direction=${direction == 'asc' ? 'desc' : 'asc'})}">
+                        E-mail
+                        <span th:if="${sort == 'email'}">
+                            <i th:class="${direction == 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+                        </span>
+                    </a>
+                </th>
                 <th colspan="2" class="text-center">Ações</th>
             </tr>
             </thead>
@@ -24,8 +60,8 @@
             <tr th:each="pj : ${pessoasjuridicas}">
                 <td th:text="${pj.id}"></td>
                 <td th:text="${pj.razaoSocial}"></td>
-                <td th:text="${pj.getCnpjFormatado()}"></td>
-                <td th:text="${pj.telefone}"></td>
+                <td th:text="${pj.getCpfOuCnpj()}"></td>
+                <td th:text="${pj.getTelefoneFormatado()}"></td>
                 <td th:text="${pj.email}"></td>
                 <td class="text-center">
                     <a th:href="@{/pessoajuridica/edit/{id}(id=${pj.id})}" class="btn btn-outline-primary">Editar</a>

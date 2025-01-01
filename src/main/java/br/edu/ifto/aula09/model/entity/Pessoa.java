@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.model.entity;
 
+import br.edu.ifto.aula09.model.utils.ValidTelefone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,9 +18,12 @@ public abstract class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Email
     @NotBlank
     private String email;
+
+    @ValidTelefone
     @NotBlank
     private String telefone;
 
@@ -57,4 +61,8 @@ public abstract class Pessoa {
     public abstract String getNomeOuRazaoSocial();
 
     public abstract String getCpfOuCnpj();
+
+    public String getTelefoneFormatado() {
+        return telefone.replaceAll("(\\d{2})(\\d{4,5})(\\d{4})", "($1) $2-$3");
+    }
 }

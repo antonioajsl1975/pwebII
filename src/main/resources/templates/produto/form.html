@@ -9,18 +9,25 @@
 <main>
   <div class="container mt-5 border rounded shadow">
     <h5 class="mt-3">Cadastro de Produto</h5>
-    <form th:action="${produto.id == null} ? @{/produto/save} : @{/produto/update}"
-          th:object="${produto}" method="post">
+    <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+    <form needs-validation th:action="@{/produto/save}" th:object="${produto}" method="post">
       <div class="form-row">
-        <div class="mb-2 col-lg-4">
+        <div class="mb-2 col-lg-6">
           <input type="hidden" th:field="*{id}">
-          <input class="form-control" type="text" th:field="*{descricao}" placeholder="Descrição">
+          <label for="descricao">Descrição</label>
+          <input class="form-control" type="text" id="descricao" th:field="*{descricao}"
+                 th:errorclass="is-invalid" placeholder="Descrição">
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>
         </div>
-        <div class="mb-2 col-lg-4">
-          <input class="form-control" type="text" th:field="*{valor}" placeholder="Valor">
+        <div class="mb-2 col-lg-6">
+          <label for="valor">Valor</label>
+          <input class="form-control" type="number" id="valor" th:field="*{valor}"
+                 th:errorclass="is-invalid" placeholder="0.00" step="0.01">
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></div>
         </div>
-        <div class="mb-2 col-lg-4 mt-3 mb-3">
-          <button class="btn btn-outline-success">Enviar</button>
+
+        <div class="mb-2 col-lg-4 mt-3">
+          <button class="btn btn-outline-success" type="submit">Salvar</button>
         </div>
       </div>
     </form>

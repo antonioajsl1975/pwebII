@@ -17,7 +17,12 @@ public class ProdutoRepository {
 
     @Transactional
     public void save(Produto produto) {
-        em.merge(produto);
+
+        if (produto.getId() == null) {
+            em.persist(produto);
+        } else {
+            em.merge(produto);
+        }
     }
 
     public Produto findById(Long id) {
@@ -33,11 +38,6 @@ public class ProdutoRepository {
     public void deleteById(Long id) {
         Produto produto = em.find(Produto.class, id);
         em.remove(produto);
-    }
-
-    @Transactional
-    public void update(Produto produto) {
-        em.merge(produto);
     }
 
     public List<Produto> findByDescricao(String descricao) {
