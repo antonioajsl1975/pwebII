@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.model.repository;
 
+import br.edu.ifto.aula09.model.entity.Pessoa;
 import br.edu.ifto.aula09.model.entity.Produto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -44,6 +45,18 @@ public class ProdutoRepository {
         String hql = "from Produto p where lower(p.descricao) like lower(:descricao)";
         Query query = em.createQuery(hql);
         query.setParameter("descricao", "%" + descricao + "%");
+        return query.getResultList();
+    }
+
+    public List<Produto> findAllSorted(String sort, String direction) {
+        if (!List.of("id", "descricao", "valor").contains(sort)) {
+            sort = "id";
+        }
+        if (!direction.equalsIgnoreCase("asc") && !direction.equalsIgnoreCase("desc")) {
+            direction = "asc";
+        }
+        String jpql = "from Produto p ORDER BY p."+ sort + " " + direction;
+        Query query = em.createQuery(jpql);
         return query.getResultList();
     }
 }

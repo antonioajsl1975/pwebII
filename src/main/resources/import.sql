@@ -24,8 +24,16 @@ INSERT INTO produto (descricao, valor) VALUES ('Açúcar 1kg', 4.20);
 INSERT INTO produto (descricao, valor) VALUES ('Café 500g', 9.50);
 INSERT INTO produto (descricao, valor) VALUES ('Macarrão 500g', 3.40);
 INSERT INTO produto (descricao, valor) VALUES ('Farinha de Trigo 1kg', 4.80);
-INSERT INTO produto (descricao, valor) VALUES ('Leite Integral 1L', 4.30);
-INSERT INTO produto (descricao, valor) VALUES ('Pernil Suíno 1kg', 35.90);
+INSERT INTO produto (descricao, valor) VALUES ('farinha de puba lider 1kg ', 10.99);
+INSERT INTO produto (descricao, valor) VALUES ('farinha branca lider 1kg', 10.99);
+INSERT INTO produto (descricao, valor) VALUES ('farinha amendoim dacolonia 500g', 15.99);
+INSERT INTO produto (descricao, valor) VALUES ('farinha de rosca pullman 500g', 9.59);
+INSERT INTO produto (descricao, valor) VALUES ('farinha de rosca panko taressu 200g', 9.99);
+INSERT INTO produto (descricao, valor) VALUES ('farinha de rosca yoki 500g', 12.69);
+INSERT INTO produto (descricao, valor) VALUES ('farinha de mand jalapao amarela 1kg grossa', 9.69);
+INSERT INTO produto (descricao, valor) VALUES ('farinha de mand delicia amarela 1kg fina', 9.99);
+INSERT INTO produto (descricao, valor) VALUES ('farinha trigo renata trad 1kg', 35.90);
+INSERT INTO produto (descricao, valor) VALUES ('Pernil Suíno 1kg', 8.59);
 
 INSERT INTO venda (data_venda, pessoa_id) VALUES ('2024-11-21T09:30:00', 1);
 INSERT INTO venda (data_venda, pessoa_id) VALUES ('2024-11-22T10:45:30', 2);

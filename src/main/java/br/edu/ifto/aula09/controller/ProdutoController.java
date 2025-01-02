@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.controller;
 
+import br.edu.ifto.aula09.model.entity.Pessoa;
 import br.edu.ifto.aula09.model.entity.PessoaFisica;
 import br.edu.ifto.aula09.model.entity.Produto;
 import br.edu.ifto.aula09.model.repository.ItemVendaRepository;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,18 @@ public class ProdutoController {
     ProdutoRepository produtoRepository;
     @Autowired
     ItemVendaRepository itemVendaRepository;
+
+    @GetMapping("/listSorted")
+    public String listSorted(
+            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "asc") String direction,
+            Model model) {
+        List<Produto> produtos = produtoRepository.findAllSorted(sort, direction);
+        model.addAttribute("produtos", produtos);
+        model.addAttribute("sort", sort);
+        model.addAttribute("direction", direction);
+        return "produto/list";
+    }
 
     @GetMapping("/list")
     public ModelAndView listar(@RequestParam(value = "descricao", required = false) String descricao, ModelMap model) {
@@ -89,9 +103,9 @@ public class ProdutoController {
         return new ModelAndView("/produto/form", model);
     }
 
-    @PostMapping("/update")
-    public ModelAndView update(Produto produto) {
-        produtoRepository.save(produto);
-        return new ModelAndView("redirect:/produto/list");
-    }
+//    @PostMapping("/update")
+//    public ModelAndView update(Produto produto) {
+//        produtoRepository.save(produto);
+//        return new ModelAndView("redirect:/produto/list");
+//    }
 }
