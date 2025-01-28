@@ -29,6 +29,7 @@
                     <input class="form-control" type="text" th:field="*{cpf}" th:errorclass="is-invalid" placeholder="CPF">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
                 </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <div class="mb-2 col-lg-4 mt-3">
                     <button class="btn btn-outline-success">Enviar</button>
                 </div>

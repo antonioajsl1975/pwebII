@@ -28,6 +28,16 @@ public class Venda {
     )
     private Pessoa pessoa;
 
+    public Venda() {
+    }
+
+    public Venda(Long id, LocalDateTime dataVenda, List<ItemVenda> itensVenda, Pessoa pessoa) {
+        this.id = id;
+        this.dataVenda = dataVenda;
+        this.itensVenda = itensVenda;
+        this.pessoa = pessoa;
+    }
+
     public Long getId() {
         return id;
     }
@@ -58,12 +68,6 @@ public class Venda {
 
     public Double totalVenda() {
         return itensVenda.stream().mapToDouble(item -> item.totalItem().doubleValue()).sum();
-
-//        double total = 0.0;
-//        for (ItemVenda itemVenda : itensVenda) {
-//            total += itemVenda.totalItem().doubleValue();
-//        }
-//        return total;
     }
 
     public List<ItemVenda> getItensVenda() {

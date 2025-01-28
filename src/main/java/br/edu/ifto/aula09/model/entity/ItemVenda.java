@@ -2,13 +2,9 @@ package br.edu.ifto.aula09.model.entity;
 
 import br.edu.ifto.aula09.model.utils.Constraint;
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Component
-@Scope("session")
 @Entity
 public class ItemVenda {
 

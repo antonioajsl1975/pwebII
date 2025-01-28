@@ -9,4 +9,5 @@ public class Constraint {
     public static final String uc_produto__descricao = "uc_produto__descricao";
     public static final String uc_pessoafisica__cpf = "uc_pessoafisica__cpf";
     public static final String uc_pessoajuridica__cnpj = "uc_pessoajuridica__cnpj";
+    public static final String uc_departamento__nome = "uc_departamento__nome";
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Entity
 public class Funcionario extends PessoaFisica implements Serializable {
 
+
     private String matricula;
 
     @ManyToOne

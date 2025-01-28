@@ -35,10 +35,13 @@ public class VendaController {
     private ProdutoRepository produtoRepository;
     @Autowired
     Venda venda;
-    @Autowired
-    ItemVenda itemVenda;
 
     public String errorMessage = null;
+
+    @ModelAttribute("venda")
+    public Venda initVenda() {
+        return new Venda();
+    }
 
     @GetMapping("/carrinho")
     public String chamarCarrinho(Model model) {
@@ -64,7 +67,7 @@ public class VendaController {
         }
         if (!itemExistente) {
 
-            itemVenda = new ItemVenda();
+            ItemVenda itemVenda = new ItemVenda();
             itemVenda.setProduto(produto);
             itemVenda.setPreco(produto.getValor());
             itemVenda.setQuantidade(1.0);
@@ -101,11 +104,6 @@ public class VendaController {
         return "redirect:/venda/carrinho";
     }
 
-    @ModelAttribute("cartItemCount")
-    public int getCartItemCount() {
-        return this.venda.getItensVenda().stream().mapToInt(item -> item.getQuantidade().intValue()).sum();
-    }
-
     @PostMapping("/finalizar")
     public String finalizarVenda(@RequestParam(required = false) Long pessoaId, HttpSession session, Model model) {
         if (this.venda.getItensVenda().isEmpty()) {
@@ -122,7 +120,7 @@ public class VendaController {
         }
 
         vendaRepository.save(this.venda);
-        session.invalidate();
+        session.removeAttribute("venda");
         model.addAttribute("successMessage", "Venda finalizada com sucesso!");
         return "redirect:/venda/carrinho";
 

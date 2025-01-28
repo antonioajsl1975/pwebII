@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @Email
     @NotBlank

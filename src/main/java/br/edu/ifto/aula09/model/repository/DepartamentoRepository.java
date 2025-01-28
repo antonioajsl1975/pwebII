@@ -17,7 +17,11 @@ public class DepartamentoRepository {
 
     @Transactional
     public void save(Departamento departamento) {
-        em.merge(departamento);
+        if (departamento.getId() == null) {
+            em.persist(departamento);
+        } else {
+            em.merge(departamento);
+        }
     }
 
     public Departamento departamento(Long id) {
