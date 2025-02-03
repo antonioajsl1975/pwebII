@@ -46,12 +46,14 @@ public class VendaController {
     @GetMapping("/carrinho")
     public String chamarCarrinho(Model model) {
         model.addAttribute("venda", this.venda);
+
         List<Pessoa> clientes = new ArrayList<>();
         clientes.addAll(pessoaFisicaRepository.findAll());
         clientes.addAll(pessoaJuridicaRepository.findAll());
         model.addAttribute("clientes", clientes);
         return "venda/carrinho";
     }
+
 
     @GetMapping("/adicionaCarrinho/{id}")
     public ModelAndView adicionaCarrinho(@PathVariable Long id) {
@@ -106,6 +108,7 @@ public class VendaController {
 
     @PostMapping("/finalizar")
     public String finalizarVenda(@RequestParam(required = false) Long pessoaId, HttpSession session, Model model) {
+
         if (this.venda.getItensVenda().isEmpty()) {
             model.addAttribute("errorMessage", "Impossível finalizar a venda. Carrinho vazio.");
             return "venda/carrinho";
@@ -123,7 +126,6 @@ public class VendaController {
         session.removeAttribute("venda");
         model.addAttribute("successMessage", "Venda finalizada com sucesso!");
         return "redirect:/venda/carrinho";
-
     }
 
     @GetMapping("/list")

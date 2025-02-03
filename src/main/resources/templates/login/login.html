@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -19,6 +14,12 @@ and open the template in the editor.
 <body>
 <div class="container d-flex vh-100">
     <div class="row justify-content-center align-self-center w-100">
+        <div th:if="${param.msgerro}">
+            <div class="alert alert-danger">Usuário/senha inválidos!</div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-success">Login finalizado com sucesso!</div>
+        </div>
         <div class="col-12 col-sm-8 col-md-6 col-lg-4">
             <div class="card shadow">
                 <h5 class="card-header text-center bg-primary text-white">Login</h5>
@@ -43,15 +44,6 @@ and open the template in the editor.
         </div>
     </div>
 </div>
-
-<form action="/logout" method="post">
-    <input type="submit" value="Logout">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-</form>
-
 <footer th:replace="~{fragments/footer :: footer}"></footer>
-
 </body>
-
-
 </html>

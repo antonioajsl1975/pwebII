@@ -1,57 +1,94 @@
-<header class="container" th:fragment="header">
+<header class="container" th:fragment="header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <nav class="navbar navbar-expand-lg rounded mt-2 bg-body-tertiary shadow">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/produto/catalogo}">Home</a>
-                    </li>
-                    <li class="nav-item">
+
+                    <!-- Somente ADMIN pode ver -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="nav-link" th:href="@{/departamento/list}">Departamentos</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Produtos
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/produto/catalogo}">Catálogo</a></li>
-                            <li><a class="dropdown-item" th:href="@{/produto/list}">Lista</a></li>
-                        </ul>
+
+                    <!-- Disponível para TODOS -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/produto/catalogo}">Loja</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Clientes
-                        </a>
+
+                    <!-- Disponível para TODOS -->
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/produto/list}">Produtos</a>
+                    </li>
+
+                    <!-- Clientes (Somente ADMIN) -->
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Clientes</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/pessoafisica/list}">Pessoa Física</a></li>
                             <li><a class="dropdown-item" th:href="@{/pessoajuridica/list}">Pessoa Jurídica</a></li>
                             <li><a class="dropdown-item" th:href="@{/pessoa/list}">Todos</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-<!--                        <a class="nav-link" href="#">Funcionários</a>-->
-                    </li>
-                    <li class="nav-item">
+
+                    <!-- Vendas - Apenas ADMIN -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="nav-link" th:href="@{/venda/list}">Vendas</a>
-                    </li>
-                    <li class="nav-item">
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="btn btn-danger">Sair</button>
-                        </form>
                     </li>
                 </ul>
 
+                <!-- Login/Logout -->
                 <ul class="navbar-nav ms-3 me-1">
+                    <!-- Ícone do usuário com inicial do nome -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" id="userDropdown"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                                 style="width: 30px; height: 30px; font-size: 1rem;">
+                                <span th:if="${#authentication.principal != 'anonymousUser'}" th:text="${#strings.substring(#authentication.name, 0, 1).toUpperCase()}"></span>
+                                <i class="bi bi-person" th:if="${#authentication.principal == 'anonymousUser'}"></i>
+                            </div>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <!-- Opção de Cadastro (Sempre disponível) -->
+                            <li>
+                                <a class="dropdown-item text-danger fw-bold" th:href="@{/cadastro}">
+                                    <i class="bi bi-person-plus"></i> Cadastro
+                                </a>
+                            </li>
+
+                            <!-- Opção de Login (Somente se não estiver autenticado) -->
+                            <li sec:authorize="!isAuthenticated()">
+                                <form th:action="@{/login}" method="post">
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-in-right"></i> Login
+                                    </button>
+                                </form>
+                            </li>
+
+                            <!-- Opção de Logout (Somente se autenticado) -->
+                            <li sec:authorize="isAuthenticated()">
+                                <form th:action="@{/logout}" method="post">
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                    </button>
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Carrinho de Compras - Visível para todos -->
                     <li class="nav-item position-relative">
                         <a class="nav-link" th:href="@{/venda/carrinho}">
                             <i class="bi bi-cart" style="font-size: 1.3rem;"></i>
                             <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
-                                  th:text="${venda != null and venda.itensVenda != null ? venda.itensVenda.size() : 0}">
+                                  th:if="${session.venda?.itensVenda != null}"
+                                  th:text="${session.venda?.itensVenda.size()}">
                             </span>
-
                         </a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>

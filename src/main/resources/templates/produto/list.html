@@ -13,12 +13,16 @@
         <div th:replace="~{fragments/msgerro :: msgerro}"></div>
         <form th:action="@{/produto/list}" class="border p-3 rounded shadow" method="get">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <input type="text" name="descricao" class="form-control" placeholder="Descricao" th:value="${param.descricao}">
                 </div>
 
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-outline-primary">Buscar</button>
+                </div>
+
+                <div class="col-md-2 ms-auto">
+                    <a class="btn btn-outline-primary" th:href="@{/produto/form}">Novo Produto</a>
                 </div>
             </div>
         </form>
@@ -67,7 +71,6 @@
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-outline-success" th:onclick="|window.location.href='/produto/form'|">Novo Produto</button>
     </div>
 </main>
 </body>
