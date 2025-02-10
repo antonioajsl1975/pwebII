@@ -57,7 +57,7 @@ public class VendaController {
 
     @GetMapping("/adicionaCarrinho/{id}")
     public ModelAndView adicionaCarrinho(@PathVariable Long id) {
-       Produto produto = produtoRepository.findById(id);
+        Produto produto = produtoRepository.findById(id);
 
         boolean itemExistente = false;
         for (ItemVenda itemVenda : this.venda.getItensVenda()) {
@@ -92,7 +92,7 @@ public class VendaController {
 
     @GetMapping("/alterarQuantidade/{id}/{acao}")
     public String alterarQuantidade(@PathVariable Long id,
-                                          @PathVariable Integer acao){
+                                    @PathVariable Integer acao){
         for (ItemVenda itemVenda : this.venda.getItensVenda()) {
             if (itemVenda.getProduto().getId().equals(id)) {
                 if (acao.equals(1)) {
@@ -113,6 +113,9 @@ public class VendaController {
             model.addAttribute("errorMessage", "Impossível finalizar a venda. Carrinho vazio.");
             return "venda/carrinho";
         }
+//        if (this.venda.getPessoa().getNomeOuRazaoSocial().equalsIgnoreCase("admin")) {
+//            model.addAttribute("errorMessage", "Admin não pode finalizar venda!");
+//        }
         this.venda.setDataVenda(LocalDateTime.now());
         Pessoa pessoa = pessoaRepository.findById(pessoaId);
 
@@ -125,7 +128,7 @@ public class VendaController {
         vendaRepository.save(this.venda);
         session.removeAttribute("venda");
         model.addAttribute("successMessage", "Venda finalizada com sucesso!");
-        return "redirect:/venda/carrinho";
+        return "/venda/carrinho";
     }
 
     @GetMapping("/list")
@@ -149,13 +152,6 @@ public class VendaController {
             errorMessage = "Não há vendas no período pesquisado";
         } else {
 
-//            for (Venda venda : vendas) {
-//                if (venda.getPessoa() instanceof PessoaFisica) {
-//                    venda.setTipoPessoa("Pessoafisica");
-//                } else if (venda.getPessoa() instanceof PessoaJuridica) {
-//                    venda.setTipoPessoa("Pessoajuridica");
-//                }
-//            }
         }
 
         model.addAttribute("vendas", vendas);

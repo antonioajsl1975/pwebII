@@ -18,7 +18,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/produto/catalogo", "/venda/carrinho").permitAll()
+                        .requestMatchers("/", "/produto/catalogo", "/venda/carrinho", "/").permitAll()
                         .requestMatchers("/venda/adicionaCarrinho/**", "/venda/alterarQuantidade/**", "/venda/removerProdutoCarrinho/**").permitAll()
                         .requestMatchers("/departamento/form", "/departamento/list",
                                 "/produto/list", "/produto/form",
@@ -28,12 +28,12 @@ public class SecurityConfiguration {
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/produto/catalogo", true)
+                        .successHandler((request, response, authentication) -> response.sendRedirect("/"))
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()

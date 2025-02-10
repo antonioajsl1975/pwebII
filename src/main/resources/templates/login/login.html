@@ -12,26 +12,23 @@
 </head>
 
 <body>
-<div class="container d-flex vh-100">
-    <div class="row justify-content-center align-self-center w-100">
-        <div th:if="${param.msgerro}">
-            <div class="alert alert-danger">Usuário/senha inválidos!</div>
-        </div>
-        <div th:if="${param.logout}">
-            <div class="alert alert-success">Login finalizado com sucesso!</div>
-        </div>
+<div th:if="${param.error != null}" class="alert alert-danger text-center">
+    <span>Usuário/senha inválidos!</span>
+</div>
+<div th:if="${param.logout != null}" class="alert alert-danger text-center">
+    <span>Login finalizado com sucesso!</span>
+</div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+
         <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+
             <div class="card shadow">
                 <h5 class="card-header text-center bg-primary text-white">Login</h5>
                 <div class="card-body">
-                    <!-- Mensagens de Erro/Logout -->
-                    <div th:replace="~{fragments/msgerro :: msgerro}"></div>
-
-                    <!-- Formulário -->
                     <form th:action="@{/login}" method="post">
                         <div class="mb-3">
                             <label for="username" class="form-label">Usuário</label>
-                            <input type="text" id="username" name="username" class="form-control" required>
+                            <input type="text" id="username" autofocus name="username" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Senha</label>
@@ -43,7 +40,6 @@
             </div>
         </div>
     </div>
-</div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>
