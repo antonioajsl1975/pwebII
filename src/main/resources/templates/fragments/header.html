@@ -4,23 +4,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    <!-- Somente ADMIN-->
-                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
                         <a class="nav-link" th:href="@{/departamento/list}">Departamentos</a>
                     </li>
 
-                    <!-- Visível para todos -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/produto/catalogo}">Loja</a>
                     </li>
 
-                    <!-- Visível para todos -->
-                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
                         <a class="nav-link" th:href="@{/produto/list}">Produtos</a>
                     </li>
 
-                    <!-- Somente ADMIN -->
-                    <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item dropdown" sec:authorize="hasAnyRole('ADMIN')">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Clientes</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/pessoafisica/list}">Pessoa Física</a></li>
@@ -29,8 +25,7 @@
                         </ul>
                     </li>
 
-                    <!-- Apenas ADMIN -->
-                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
                         <a class="nav-link" th:href="@{/venda/list}">Vendas</a>
                     </li>
                 </ul>
@@ -46,8 +41,8 @@
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
                                  style="width: 30px; height: 30px; font-size: 1rem;">
-                <span th:if="${#authentication.principal != 'anonymousUser'}"
-                      th:text="${#strings.substring(#authentication.name, 0, 1).toUpperCase()}"></span>
+                                <span th:if="${#authentication.principal != 'anonymousUser'}"
+                                      th:text="${#strings.substring(#authentication.name, 0, 1).toUpperCase()}"></span>
                                 <i class="bi bi-person" th:if="${#authentication.principal == 'anonymousUser'}"></i>
                             </div>
                         </a>
@@ -68,7 +63,6 @@
                         </ul>
                     </li>
 
-                    <!-- Carrinho -->
                     <li class="nav-item position-relative">
                         <a class="nav-link" th:href="@{/venda/carrinho}">
                             <i class="bi bi-cart" style="font-size: 1.3rem;"></i>

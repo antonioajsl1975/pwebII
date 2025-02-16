@@ -51,6 +51,7 @@
                 <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy HH:mm:ss')}"></td>
                 <td th:text="${venda.pessoa.getNomeOuRazaoSocial()}"></td>
                 <td th:text="${venda.pessoa.getCpfOuCnpj()}"></td>
+                <td th:text="${venda.pessoa.usuario}"></td>
                 <td th:text="${#numbers.formatCurrency(venda.totalVenda())}"></td>
                 <td>
                     <a th:href="@{/venda/detail/{id}(id=${venda.id})}" class="btn btn-outline-primary" style="cursor: pointer;">itens</a>

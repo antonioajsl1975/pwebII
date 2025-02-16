@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -35,6 +38,8 @@ public class VendaController {
     private ProdutoRepository produtoRepository;
     @Autowired
     Venda venda;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     public String errorMessage = null;
 
@@ -107,30 +112,50 @@ public class VendaController {
     }
 
     @PostMapping("/finalizar")
-    public String finalizarVenda(@RequestParam(required = false) Long pessoaId, HttpSession session, Model model) {
+    public String finalizarVenda(Model model, HttpSession httpSession) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+//        if (authentication == null || !authentication.isAuthenticated()) {
+//            model.addAttribute("errorMessage", "Usuário não autenticado.");
+//            return "venda/carrinho";
+//        }
+
+        Object principal = authentication.getPrincipal();
+        Usuario usuarioLogado = null;
+
+        if (principal instanceof UserDetails userDetails) {
+            usuarioLogado = usuarioRepository.findByUsername(userDetails.getUsername());
+        }
+
+        if (usuarioLogado == null) {
+            model.addAttribute("errorMessage", "Usuário não encontrado no banco de dados.");
+            return "venda/carrinho";
+        }
+
+        if (usuarioLogado.getRoles().stream().anyMatch(role -> role.getNome().equals("ROLE_ADMIN"))) {
+            model.addAttribute("errorMessage", "Admin não pode finalizar venda.");
+            return "venda/carrinho";
+        }
+
+        Pessoa pessoa = usuarioLogado.getPessoa();
+        if (pessoa == null) {
+            model.addAttribute("errorMessage", "Usuário não possui uma pessoa associada.");
+            return "venda/carrinho";
+        }
         if (this.venda.getItensVenda().isEmpty()) {
             model.addAttribute("errorMessage", "Impossível finalizar a venda. Carrinho vazio.");
             return "venda/carrinho";
         }
-//        if (this.venda.getPessoa().getNomeOuRazaoSocial().equalsIgnoreCase("admin")) {
-//            model.addAttribute("errorMessage", "Admin não pode finalizar venda!");
-//        }
-        this.venda.setDataVenda(LocalDateTime.now());
-        Pessoa pessoa = pessoaRepository.findById(pessoaId);
 
-        if (pessoa != null) {
-            this.venda.setPessoa(pessoa);
-        } else {
-            throw new IllegalArgumentException("Cliente inválido ou inexistente!");
-        }
+        this.venda.setPessoa(pessoa);
+        this.venda.setDataVenda(LocalDateTime.now());
 
         vendaRepository.save(this.venda);
-        session.removeAttribute("venda");
+        httpSession.removeAttribute("venda");
         model.addAttribute("successMessage", "Venda finalizada com sucesso!");
-        return "/venda/carrinho";
+        return "venda/carrinho";
     }
-
     @GetMapping("/list")
     public ModelAndView listar(@RequestParam(required = false, name = "dataInicio") String dataInicio,
                                @RequestParam(required = false, name ="dataFim") String dataFim,

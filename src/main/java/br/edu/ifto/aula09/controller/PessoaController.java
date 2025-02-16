@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
-@Scope("request")
+//@Scope("request")
 @Controller
 @RequestMapping("pessoa")
 public class PessoaController {

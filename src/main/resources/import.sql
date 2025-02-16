@@ -17,6 +17,16 @@ INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (6, 'Empresa Y SA', 
 INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (7, 'Comércio Z ME', '62736225000168');
 INSERT INTO pessoa_juridica (id, razao_Social, cnpj) VALUES (8, 'Serviços W LTDA', '30541116000107');
 
+INSERT INTO usuario(username, password, pessoa_id) VALUES('admin', '$2a$10$.Fz7uDloy6aCS6/QyeYsPO9Wb5db0seoWLnOVmnKfIukRn19eCo3e', 1);
+
+INSERT INTO role (nome) VALUES ('ADMIN');
+
+INSERT INTO role (nome) VALUES ('USER');
+
+INSERT INTO role (nome) VALUES ('MANAGER');
+
+INSERT INTO role (nome) VALUES ('EMPLOYEE');
+
 INSERT INTO produto (descricao, valor) VALUES ('Arroz 1kg', 5.50);
 INSERT INTO produto (descricao, valor) VALUES ('Feijão 1kg', 6.80);
 INSERT INTO produto (descricao, valor) VALUES ('Açúcar 1kg', 4.20);
