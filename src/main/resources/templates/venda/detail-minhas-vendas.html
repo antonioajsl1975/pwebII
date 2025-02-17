@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Itens da venda',~{})}"></head>
+
+<body>
+<main>
+    <div class="container mt-5 border p-3 rounded shadow">
+        <h5>Detalhes das vendas</h5>
+        <table class="table table-striped table-hover w-50">
+            <thead>
+                <tr>
+                    <th>Id Venda</th>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td th:text="${detail.id}"></td>
+                    <td th:text="${#temporals.format(detail.dataVenda, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${detail.pessoa.getNomeOuRazaoSocial()}"></td>
+                    <td th:text="${#numbers.formatCurrency(detail.totalVenda())}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container mt-5 border p-3 rounded shadow">
+        <table class="table table-striped table-hover">
+            <thead class="table-light">
+            <tr>
+                <th>Item</th>
+                <th>Descrição do Produto</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, status : ${detail.itensVenda}">
+                <td th:text="${status.index + 1}"></td>
+                <td th:text="${item.produto.descricao}"></td>
+                <td th:text="${item.quantidade}"></td>
+                <td th:text="${#numbers.formatCurrency(item.preco)}"></td>
+                <td th:text="${#numbers.formatCurrency(item.totalItem())}"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4" class="text-end fw-bold">Total da Venda:</td>
+                <td th:text="${#numbers.formatCurrency(detail.totalVenda())}" class="fw-bold"></td>
+            </tr>
+            </tfoot>
+        </table>
+        <a th:href="@{/venda/minhas-vendas}" class="btn btn-outline-success">Voltar para Lista</a>
+    </div>
+</main>
+</body>
+</html>

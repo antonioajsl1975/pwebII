@@ -30,7 +30,7 @@ public class DatabaseSeeder {
 //                // Criando usuário ADMIN
 //                Usuario user = new Usuario();
 //                user.setUsername("admin");
-//                user.setPassword(passwordEncoder.encode("123456"));
+//                user.setPassword(passwordEncoder.encode("123"));
 //
 //                Set<Role> roles = new HashSet<>();
 //                roles.add(roleUser);

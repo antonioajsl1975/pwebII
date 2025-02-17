@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head th:replace="~{fragments/head :: head('Carrinho',~{})}"></head>
+<head th:replace="~{fragments/head :: head('',~{})}"></head>
 
 <body>
 <main>
@@ -69,6 +69,31 @@
                         Finalizar Venda
                     </button>
                 </form>
+            </div>
+
+            <!-- Modal de Login -->
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Faça Login para Continuar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="loginForm" th:action="@{/login}" method="post">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Usuário</label>
+                                    <input type="text" id="username" name="username" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Senha</label>
+                                    <input type="password" id="password" name="password" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

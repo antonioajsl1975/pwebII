@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Meus Pedidos',~{})}"></head>
+
+<body>
+<main>
+    <div class="container mt-5 border p-4 rounded shadow">
+        <h5>Meus Pedidos</h5>
+        <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <th>Data/Hora</th>
+                <th>Valor Total</th>
+                <th>Detalhes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="venda : ${vendas}">
+                <td th:text="${venda.id}"></td>
+                <td th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#numbers.formatCurrency(venda.totalVenda())}"></td>
+                <td>
+                    <a th:href="@{/venda/detail-minhas-vendas/{id}(id=${venda.id})}" class="btn btn-outline-primary">Ver</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

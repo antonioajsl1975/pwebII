@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.model.repository;
 
+import br.edu.ifto.aula09.model.entity.Pessoa;
 import br.edu.ifto.aula09.model.entity.Venda;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -27,6 +28,15 @@ public class VendaRepository {
 
     public Venda findById(Long id) {
         return em.find(Venda.class, id);
+    }
+
+    public List<Venda> findByPessoa(Pessoa pessoa) {
+        String hql = "SELECT v FROM Venda v WHERE v.pessoa = :pessoa";
+
+        Query query = em.createQuery(hql, Venda.class);
+        query.setParameter("pessoa", pessoa);
+
+        return query.getResultList();
     }
 
     @Transactional

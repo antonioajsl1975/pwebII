@@ -1,31 +1,37 @@
 package br.edu.ifto.aula09.model.entity;
 
-import br.edu.ifto.aula09.model.utils.Constraint;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Usuario implements Serializable, UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     @OneToOne(optional = true)
-    @JoinColumn(name = "pessoa_id", unique = true,
-                nullable = true,
-                foreignKey = @ForeignKey(name = Constraint.uc_usuario__pessoa)
-    )
+    @JoinColumn(name = "pessoa_id", unique = true)
     private Pessoa pessoa;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -38,19 +44,11 @@ public class Usuario implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> (GrantedAuthority) () -> "ROLE_" + role.getNome())
-                .toList();
+        return roles;
     }
 
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
+    public boolean isAdmin() {
+        return roles.stream().anyMatch(role -> role.getNome().equalsIgnoreCase("ROLE_ADMIN"));
     }
 
     @Override
@@ -73,3 +71,4 @@ public class Usuario implements Serializable, UserDetails {
         return true;
     }
 }
+

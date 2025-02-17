@@ -8,21 +8,18 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class Role implements Serializable, GrantedAuthority {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String nome;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<Usuario> usuarios = new HashSet<>();
 
     @Override
     public String getAuthority() {
