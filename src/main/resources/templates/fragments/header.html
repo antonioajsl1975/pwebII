@@ -13,7 +13,7 @@
                     </li>
 
                     <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-                        <a class="nav-link" th:href="@{/produto/list}">Produtos</a>
+                        <a class="nav-link" th:href="|/produto/list|">Produtos</a>
                     </li>
 
                     <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
@@ -28,47 +28,34 @@
                 <ul class="navbar-nav ms-3 me-1">
 
                     <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
-                        <span class="me-2 text-secondary" th:text="${#authentication.name}"></span>
+                        <span class="me-3 text-secondary" th:text="|Olá ${#authentication.name}|"></span>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
-                                 style="width: 30px; height: 30px; font-size: 1rem;">
-                                <span th:if="${#authentication.principal != 'anonymousUser'}"
-                                      th:text="${#strings.substring(#authentication.principal.username, 0, 1).toUpperCase()}"></span>
-                                <i class="bi bi-person" th:if="${#authentication.principal == 'anonymousUser'}"></i>
-                            </div>
+
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="isAuthenticated()">
+                        <a class="dropdown-item" th:href="@{/venda/minhas-vendas}">
+                            Meus Pedidos
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    </li>
 
-                            <li sec:authorize="!isAuthenticated()">
-                                <a class="dropdown-item" th:href="@{/login}">
-                                    <i class="bi bi-box-arrow-in-right"></i> Login
-                                </a>
-                            </li>
-
-                            <li sec:authorize="isAuthenticated()">
-                                <a class="dropdown-item" th:href="@{/venda/minhas-vendas}">
-                                    <i class="bi bi-receipt"></i> Meus Pedidos
-                                </a>
-                            </li>
-
-                            <li sec:authorize="isAuthenticated()">
-                                <form th:action="@{/logout}" method="post">
-                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                    <button type="submit" class="dropdown-item">
-                                        <i class="bi bi-box-arrow-right"></i> Logout
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link d-flex align-items-center" th:href="|login/login|" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                            <i class="bi bi-box-arrow-in-left me-1" style="font-size: 1.2rem;"></i>
+                            <span class="fw-bold text-dark">Entre | Cadastre-se</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                            <button type="submit" class="dropdown-item">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
                     </li>
 
                     <li class="nav-item position-relative">
                         <a class="nav-link" th:href="@{/venda/carrinho}">
-                            <i class="bi bi-cart" style="font-size: 1.3rem;"></i>
+                            <i class="bi bi-cart-check" style="font-size: 1.3rem;"></i>
                             <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
                                   th:if="${session.venda?.itensVenda != null}"
                                   th:text="${session.venda?.itensVenda.size()}"></span>
@@ -78,4 +65,5 @@
             </div>
         </div>
     </nav>
+    <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
 </header>

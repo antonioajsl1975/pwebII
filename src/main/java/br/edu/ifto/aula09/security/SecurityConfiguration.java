@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/produto/catalogo?logout")
+                        .logoutSuccessUrl("/produto/catalogo?logout=true")
                         .permitAll()
                 )
                 .rememberMe(rememberMe -> rememberMe.userDetailsService(userDetailsService));

@@ -53,7 +53,9 @@ public class ProdutoController {
     }
 
     @GetMapping("/catalogo")
-    public ModelAndView catalogo(@RequestParam(value = "descricao", required = false) String descricao, ModelMap model) {
+    public ModelAndView catalogo(@RequestParam(value = "descricao", required = false) String descricao,
+                                 @RequestParam(value = "logout", required = false) String logout,
+                                 ModelMap model) {
         List<Produto> catalogo;
         if (descricao != null && !descricao.isEmpty()) {
             catalogo = produtoRepository.findByDescricao(descricao);
@@ -61,6 +63,9 @@ public class ProdutoController {
             catalogo = produtoRepository.findAll();
         }
         model.addAttribute("catalogo", catalogo);
+        if ("true".equals(logout)) {
+            model.addAttribute("errorMessage", "Você saiu com sucesso!");
+        }
         return new ModelAndView("/produto/catalogo");
     }
 

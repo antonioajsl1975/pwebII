@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +48,16 @@ public class PessoaController {
         return "pessoa/form";
     }
 
-    @PostMapping("/cadastro")
     @Transactional
+    @PostMapping("/cadastro")
     public String cadastrarPessoaEUsuario(@RequestParam String tipoPessoa,
                                           @RequestParam String nomeOuRazaoSocial,
                                           @RequestParam String cpfOuCnpj,
                                           @RequestParam String email,
                                           @RequestParam String telefone,
                                           @ModelAttribute @Valid Usuario usuario,
-                                          Model model) {
+                                          Model model,
+                                          RedirectAttributes attributes) {
 
         Pessoa pessoa;
         if ("fisica".equals(tipoPessoa)) {
@@ -89,8 +91,8 @@ public class PessoaController {
 
         usuarioRepository.save(usuario);
 
-        model.addAttribute("successMessage", "Cadastro realizado com sucesso!");
-        return "pessoa/form";
+        attributes.addFlashAttribute("successMessage", "Cadastro realizado com sucesso!");
+        return "redirect:/produto/catalogo";
     }
 
 

@@ -1,9 +1,8 @@
 <div th:fragment="msgerro">
-    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-        <p th:text="${errorMessage}"></p>
+    <div th:if="${errorMessage}" class="alert alert-danger w-50 mx-auto py-2 px-3 text-center" role="alert">
+        <p th:text="${errorMessage}" class="m-0"></p>
     </div>
-
-    <div th:if="${successMessage}" class="alert alert-success" role="alert">
-        <p th:text="${successMessage}"></p>
+    <div th:if="${successMessage}" class="alert alert-success w-50 mx-auto py-2 px-3 text-center" role="alert">
+        <p th:text="${successMessage}" class="m-0"></p>
     </div>
 </div>

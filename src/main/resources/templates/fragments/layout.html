@@ -9,9 +9,12 @@
 
 <body class="d-flex flex-column min-vh-100">
 <header th:replace="~{fragments/header :: header}"></header>
-
+<div class="container mt-3">
+    <div th:replace="~{fragments/msgerro :: msgerro}"></div>
+</div>
 <main th:replace="${main}"></main>
 
+<!--<div th:replace="~{fragments/modal-login :: modal-login}"></div>-->
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

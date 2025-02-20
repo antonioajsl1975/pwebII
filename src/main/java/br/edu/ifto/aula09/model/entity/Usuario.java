@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.model.entity;
 
+import br.edu.ifto.aula09.model.utils.Constraint;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(uniqueConstraints = {@UniqueConstraint(name = Constraint.uc_usuario__username, columnNames = "username")})
 public class Usuario implements Serializable, UserDetails {
 
     @Id
