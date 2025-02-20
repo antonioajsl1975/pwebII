@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -15,19 +14,20 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Bean
-    public UserDetailsService userDetailsService(UsuarioDetailsManager usuarioDetailsManager) {
-        return usuarioDetailsManager;
+    private final UsuarioRepository usuarioRepository;
+
+    public SecurityConfiguration(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/logout"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/produto/catalogo", "/venda/carrinho",
                                 "/venda/adicionaCarrinho/*", "/venda/removerProdutoCarrinho/*",
-                                "/venda/alterarQuantidade/*","/pessoa/form",
+                                "/venda/alterarQuantidade/*", "/pessoa/form",
                                 "/pessoa/cadastro", "/venda/alterarQuantidade/**", "/venda/finalizar").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
@@ -42,18 +42,18 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/produto/catalogo?logout=true")
                         .permitAll()
                 )
-                .rememberMe(rememberMe -> rememberMe.userDetailsService(userDetailsService));
+                .rememberMe(rememberMe -> rememberMe.userDetailsService(userDetailsManager()));
 
         return http.build();
     }
 
     @Bean
-    public UserDetailsManager userDetailsManager(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
-        return new UsuarioDetailsManager(usuarioRepository, passwordEncoder);
+    public UserDetailsManager userDetailsManager() {
+        return new UsuarioDetailsManager(usuarioRepository, passwordEncoder());
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

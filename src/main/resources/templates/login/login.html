@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head th:replace="~{fragments/head :: head('Cadastro de Clientes',~{})}"></head>
+<head th:replace="~{fragments/head :: head('Login',~{})}"></head>
 
 <body>
-<main>
-    <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
-</main>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var successMessage = [[${successMessage}]];
-        if (successMessage) {
-            var modalLogin = new bootstrap.Modal(document.getElementById('modalLogin'));
-            modalLogin.show();
-        }
-    });
-</script>
+    <main>
+
+        <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
+
+    </main>
+
 </body>
 </html>

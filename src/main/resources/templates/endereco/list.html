@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+      <html xmlns:th="http://www.thymeleaf.org">
+      <head>
+      <title>Lista de Endereços</title>
+</head>
+<body>
+<main>
+  <div class="container mt-5 border rounded shadow">
+    <h5 class="mt-3">Lista de Endereços</h5>
+
+    <table border="1">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>CEP</th>
+        <th>Logradouro</th>
+        <th>Complemento</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Número</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="endereco : ${enderecos}">
+        <td th:text="${endereco.id}"></td>
+        <td th:text="${endereco.cep}"></td>
+        <td th:text="${endereco.logradouro}"></td>
+        <td th:text="${endereco.complemento}"></td>
+        <td th:text="${endereco.bairro}"></td>
+        <td th:text="${endereco.cidade}"></td>
+        <td th:text="${endereco.estado}"></td>
+        <td th:text="${endereco.numero}"></td>
+        <td>
+          <a th:href="@{'/endereco/edit/' + ${endereco.id}}">Editar</a> |
+          <a th:href="@{'/endereco/delete/' + ${endereco.id}}" onclick="return confirm('Deseja realmente excluir?');">Excluir</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <a href="/endereco/form">Cadastrar Novo Endereço</a>
+  </div>
+</main>
+</body>
+</html>

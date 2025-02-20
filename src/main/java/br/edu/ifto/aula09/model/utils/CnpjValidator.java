@@ -10,17 +10,17 @@ public class CnpjValidator implements ConstraintValidator<ValidCNPJ, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null || value.isEmpty()) {
-            return false; // CNPJ não pode ser nulo ou vazio
+            return false;
         }
         if (!value.matches(CNPJ_REGEX)) {
-            return false; // Formato do CNPJ inválido
+            return false;
         }
-        return isValidCNPJ(value.replaceAll("\\D", "")); // Remove caracteres não numéricos antes da validação lógica
+        return isValidCNPJ(value.replaceAll("\\D", ""));
     }
 
     private boolean isValidCNPJ(String cnpj) {
         if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {
-            return false; // Tamanho incorreto ou todos os dígitos iguais
+            return false;
         }
         try {
             int[] pesos1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};

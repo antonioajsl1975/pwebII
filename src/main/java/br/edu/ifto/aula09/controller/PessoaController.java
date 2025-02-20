@@ -5,20 +5,16 @@ import br.edu.ifto.aula09.model.repository.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-//@Scope("request")
 @Controller
 @RequestMapping("pessoa")
 public class PessoaController {
@@ -34,12 +30,15 @@ public class PessoaController {
     @Autowired
     private PessoaJuridicaRepository pessoaJuridicaRepository;
 
-    public PessoaController(PessoaRepository pessoaRepository, UsuarioRepository usuarioRepository,
-                            RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public PessoaController(PessoaRepository pessoaRepository,
+                            UsuarioRepository usuarioRepository,
+                            RoleRepository roleRepository,
+                            ApplicationContext context) {
         this.pessoaRepository = pessoaRepository;
         this.usuarioRepository = usuarioRepository;
         this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = context.getBean(PasswordEncoder.class);
     }
 
     @GetMapping("/form")
@@ -56,7 +55,6 @@ public class PessoaController {
                                           @RequestParam String email,
                                           @RequestParam String telefone,
                                           @ModelAttribute @Valid Usuario usuario,
-                                          Model model,
                                           RedirectAttributes attributes) {
 
         Pessoa pessoa;
@@ -93,27 +91,5 @@ public class PessoaController {
 
         attributes.addFlashAttribute("successMessage", "Cadastro realizado com sucesso!");
         return "redirect:/produto/catalogo";
-    }
-
-
-    @GetMapping("/list")
-    public ModelAndView listar(@RequestParam(value = "nomeRazaoSocial", required = false) String nomeRazaoSocial, ModelMap model) {
-        List<PessoaFisica> pessoasFisicas;
-        List<PessoaJuridica> pessoasJuridicas;
-
-        if (nomeRazaoSocial != null && !nomeRazaoSocial.isEmpty()) {
-            pessoasFisicas = pessoaFisicaRepository.findByNome(nomeRazaoSocial);
-            pessoasJuridicas = pessoaJuridicaRepository.findByRazaoSocial(nomeRazaoSocial);
-        } else {
-            pessoasFisicas = pessoaFisicaRepository.findAll();
-            pessoasJuridicas = pessoaJuridicaRepository.findAll();
-        }
-
-        List<Pessoa> pessoas = new ArrayList<>();
-        pessoas.addAll(pessoasFisicas);
-        pessoas.addAll(pessoasJuridicas);
-
-        model.addAttribute("pessoas", pessoas);
-        return new ModelAndView("pessoa/list");
     }
 }

@@ -1,5 +1,5 @@
 <div th:fragment="modalLogin" class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 400px;"> <!-- Reduzido em 20% -->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalLoginLabel">Login / Cadastro</h5>
@@ -24,4 +24,13 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var modalLogin = document.getElementById('modalLogin');
+
+            modalLogin.addEventListener('shown.bs.modal', function () {
+                document.getElementById('username').focus();
+            });
+        });
+    </script>
 </div>
