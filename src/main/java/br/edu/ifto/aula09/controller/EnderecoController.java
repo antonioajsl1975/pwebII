@@ -1,7 +1,10 @@
 package br.edu.ifto.aula09.controller;
 
 import br.edu.ifto.aula09.model.entity.Endereco;
+import br.edu.ifto.aula09.model.entity.TipoEndereco;
 import br.edu.ifto.aula09.model.repository.EnderecoRepository;
+import br.edu.ifto.aula09.model.repository.TipoEnderecoRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,31 +22,33 @@ public class EnderecoController {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public EnderecoController(EnderecoRepository enderecoRepository) {
-        this.enderecoRepository = enderecoRepository;
-    }
+    @Autowired
+    private TipoEnderecoRepository tipoEnderecoRepository;
 
     @GetMapping("/form")
     public String form(Model model) {
-        model.addAttribute("enderecos", new Endereco());
+        model.addAttribute("endereco", new Endereco());
+        model.addAttribute("tipos", tipoEnderecoRepository.findAll());
         return "endereco/form";
     }
 
-    @PostMapping("/cadastro")
-    public String cadastrar(@Valid Endereco endereco, BindingResult result) {
-        if(result.hasErrors()) {
+    @PostMapping("/salvar")
+    public String salvar(@Valid Endereco endereco, BindingResult result,
+                         @RequestParam Long tipoEnderecoId, HttpSession session) {
+        if (result.hasErrors()) {
             return "endereco/form";
         }
-        enderecoRepository.save(endereco);
-        return "redirect:/endereco/list";
-    }
 
-    @GetMapping("/list")
-    public String listar(Model model) {
-        model.addAttribute("enderecos", enderecoRepository.findAll());
-        return "endereco/list";
-    }
+        TipoEndereco tipoEndereco = tipoEnderecoRepository.findById(tipoEnderecoId)
+                .orElseThrow(() -> new IllegalArgumentException("Tipo de Endereço não encontrado."));
 
+        endereco.setTipoEndereco(tipoEndereco);
+
+        // Salvando o endereço na sessão para exibir no carrinho
+        session.setAttribute("enderecoEntrega", endereco);
+
+        return "redirect:/venda/carrinho";
+    }
 
     @GetMapping("/buscar-cep")
     @ResponseBody

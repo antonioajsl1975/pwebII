@@ -4,9 +4,10 @@ import br.edu.ifto.aula09.model.utils.ValidTelefone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,12 @@ public abstract class Pessoa {
 
     @OneToMany(mappedBy = "pessoa", orphanRemoval = false)
     private List<Venda> vendas = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "pessoa_endereco",
+            joinColumns = @JoinColumn(name = "pessoa_id"),
+            inverseJoinColumns = @JoinColumn(name = "endereco_id"))
+    private List<Endereco> enderecos = new ArrayList<>();
 
     public abstract String getNomeOuRazaoSocial();
 

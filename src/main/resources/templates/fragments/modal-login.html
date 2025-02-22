@@ -26,10 +26,17 @@
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var modalLogin = document.getElementById('modalLogin');
+            var form = document.getElementById("loginForm");
 
-            modalLogin.addEventListener('shown.bs.modal', function () {
-                document.getElementById('username').focus();
+            form.addEventListener("submit", function (event) {
+                var redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+                if (redirectUrl) {
+                    var inputRedirect = document.createElement("input");
+                    inputRedirect.type = "hidden";
+                    inputRedirect.name = "redirectAfterLogin";
+                    inputRedirect.value = redirectUrl;
+                    form.appendChild(inputRedirect);
+                }
             });
         });
     </script>

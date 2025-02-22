@@ -31,6 +31,10 @@ public class Venda {
     )
     private Pessoa pessoa;
 
+    @ManyToOne
+    @JoinColumn(name = "endereco_entrega_id")
+    private Endereco enderecoEntrega;
+
     public Double totalVenda() {
         return itensVenda.stream().mapToDouble(item -> item.totalItem().doubleValue()).sum();
     }

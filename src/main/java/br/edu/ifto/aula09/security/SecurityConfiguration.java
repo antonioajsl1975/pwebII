@@ -1,6 +1,9 @@
 package br.edu.ifto.aula09.security;
 
 import br.edu.ifto.aula09.model.repository.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -23,19 +27,20 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/logout"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/logout", "/saveRedirectAfterLogin"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/produto/catalogo", "/venda/carrinho",
+                        .requestMatchers("/", "/produto/catalogo", "/venda/carrinho", "/venda/checkout",
                                 "/venda/adicionaCarrinho/*", "/venda/removerProdutoCarrinho/*",
                                 "/venda/alterarQuantidade/*", "/pessoa/form",
-                                "/pessoa/cadastro", "/venda/alterarQuantidade/**", "/venda/finalizar").permitAll()
+                                "/pessoa/cadastro", "/venda/alterarQuantidade/**", "/venda/finalizar", "/saveRedirectAfterLogin").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
-                        .loginPage("/login")
+                        .loginProcessingUrl("/login")  // Define o endpoint de processamento do login
+                        .defaultSuccessUrl("/produto/catalogo", true)
+                        .successHandler(savedRequestAwareAuthenticationSuccessHandler())
                         .failureUrl("/login?error=true")
-                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -46,6 +51,24 @@ public class SecurityConfiguration {
                 .rememberMe(rememberMe -> rememberMe.userDetailsService(userDetailsManager()));
 
         return http.build();
+    }
+
+    @Bean
+    public SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler() {
+        return new SavedRequestAwareAuthenticationSuccessHandler() {
+            @Override
+            protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
+                    if (redirectUrl != null) {
+                        session.removeAttribute("redirectAfterLogin");
+                        return redirectUrl;
+                    }
+                }
+                return super.determineTargetUrl(request, response);
+            }
+        };
     }
 
     @Bean

@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 public class Endereco {
@@ -34,7 +37,14 @@ public class Endereco {
     @NotBlank(message = "Número é obrigatório")
     private String numero;
 
+    @ManyToMany
+    @JoinTable(name = "endereco_pessoa",
+            joinColumns = @JoinColumn(name = "endereco_id"),
+            inverseJoinColumns = @JoinColumn(name = "pessoa_id"))
+    private List<Pessoa> pessoas = new ArrayList<>();
+
     @ManyToOne
-    private Pessoa pessoa;
+    @JoinColumn(name = "tipo_endereco_id", nullable = false)
+    private TipoEndereco tipoEndereco;
 }
 

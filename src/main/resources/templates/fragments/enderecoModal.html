@@ -1,0 +1,37 @@
+<div th:fragment="modalEndereco">
+    <div class="modal fade" id="modalEndereco" tabindex="-1" aria-labelledby="modalEnderecoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="form-endereco" th:action="@{/venda/carrinho}" method="get">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEnderecoLabel">Cadastrar Endereço de Entrega</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" name="cep" class="form-control" required>
+
+                        <label for="logradouro">Logradouro:</label>
+                        <input type="text" id="logradouro" name="logradouro" class="form-control" required>
+
+                        <label for="numero">Número:</label>
+                        <input type="text" id="numero" name="numero" class="form-control" required>
+
+                        <label for="tipoEnderecoId">Tipo de Endereço:</label>
+                        <select id="tipoEnderecoId" name="tipoEnderecoId" class="form-control" required>
+                            <option value="" disabled selected>Selecione o tipo de endereço</option>
+                            <option th:each="tipo : ${tipos}"
+                                    th:value="${tipo.id}"
+                                    th:text="${tipo.descricao}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Confirmar Endereço</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

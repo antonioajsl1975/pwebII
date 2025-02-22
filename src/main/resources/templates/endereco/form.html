@@ -1,64 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head>
-    <title>Cadastro de Endereço</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#cep').on('blur', function() {
-                var cep = $(this).val().replace(/[^0-9]/g, '');
-                if (cep.length === 8) {
-                    $.getJSON('/endereco/buscar-cep', { cep: cep }, function(dados) {
-                        if (!("erro" in dados)) {
-                            $('#logradouro').val(dados.logradouro).prop('readonly', true);
-                            $('#bairro').val(dados.bairro).prop('readonly', true);
-                            $('#cidade').val(dados.localidade).prop('readonly', true);
-                            $('#estado').val(dados.uf).prop('readonly', true);
-                        } else {
-                            alert("CEP não encontrado!");
-                        }
-                    }).fail(function() {
-                        alert("Erro ao buscar o CEP. Tente novamente.");
-                    });
-                } else {
-                    alert("CEP inválido! Digite um CEP com 8 números.");
-                }
-            });
-        });
-    </script>
-</head>
+<head th:replace="~{fragments/head :: head('Endereço',~{})}"></head>
 
 <body>
 <main>
-    <div class="container mt-5 border rounded shadow">
-        <h5 class="mt-3">Cadastro de Endereço</h5>
 
-        <form th:action="@{/endereco/cadastro}" method="post">
-            <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="cep" required>
+    <div th:replace="~{fragments/enderecoModal :: modalEndereco}"></div>
 
-            <label for="logradouro">Logradouro:</label>
-            <input type="text" id="logradouro" name="logradouro" readonly required>
-
-            <label for="complemento">Complemento:</label>
-            <input type="text" id="complemento" name="complemento">
-
-            <label for="bairro">Bairro:</label>
-            <input type="text" id="bairro" name="bairro" readonly required>
-
-            <label for="cidade">Cidade:</label>
-            <input type="text" id="cidade" name="cidade" readonly required>
-
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" readonly required>
-
-            <label for="numero">Número:</label>
-            <input type="text" id="numero" name="numero" required>
-
-            <button type="submit">Cadastrar</button>
-        </form>
-    </div>
 </main>
+
 </body>
 </html>

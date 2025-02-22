@@ -25,6 +25,9 @@ INSERT INTO role (nome) VALUES ('ROLE_ADMIN');
 
 INSERT INTO role (nome) VALUES ('ROLE_USER');
 
+INSERT INTO tipo_endereco(descricao) VALUES('Residencial');
+INSERT INTO tipo_endereco(descricao) VALUES('Comercial');
+
 INSERT INTO usuario_role(role_id, usuario_id) VALUES(1, 1);
 INSERT INTO usuario_role(role_id, usuario_id) VALUES(2, 2);
 

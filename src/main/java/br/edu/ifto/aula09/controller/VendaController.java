@@ -1,5 +1,6 @@
 package br.edu.ifto.aula09.controller;
 
+import br.edu.ifto.aula09.exception.UsuarioNaoAutenticadoException;
 import br.edu.ifto.aula09.model.entity.*;
 import br.edu.ifto.aula09.model.repository.*;
 import jakarta.persistence.Query;
@@ -44,6 +45,11 @@ public class VendaController {
     UsuarioRepository usuarioRepository;
 
     public String errorMessage = null;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private TipoEnderecoRepository tipoEnderecoRepository;
 
     @ModelAttribute("venda")
     public Venda initVenda() {
@@ -51,16 +57,16 @@ public class VendaController {
     }
 
     @GetMapping("/carrinho")
-    public String chamarCarrinho(Model model) {
-        model.addAttribute("venda", this.venda);
+    public String chamarCarrinho(Model model, HttpSession session) {
 
-        List<Pessoa> clientes = new ArrayList<>();
-        clientes.addAll(pessoaFisicaRepository.findAll());
-        clientes.addAll(pessoaJuridicaRepository.findAll());
-        model.addAttribute("clientes", clientes);
+        if (session.getAttribute("venda") == null) {
+            session.setAttribute("venda", this.venda);
+        }
+        model.addAttribute("venda", this.venda);
+        model.addAttribute("enderecoEntrega", session.getAttribute("enderecoEntrega"));
+        model.addAttribute("tipos", tipoEnderecoRepository.findAll());
         return "venda/carrinho";
     }
-
 
     @GetMapping("/adicionaCarrinho/{id}")
     public ModelAndView adicionaCarrinho(@PathVariable Long id) {
@@ -113,47 +119,84 @@ public class VendaController {
         return "redirect:/venda/carrinho";
     }
 
-    @PostMapping("/finalizar")
-    public String finalizarVenda(Model model, HttpSession httpSession) {
+    @PostMapping("/checkout")
+    public String checkout(Model model, HttpSession session) {
+        Pessoa pessoa = obterPessoaLogada();
+        model.addAttribute("pessoa", pessoa);
 
+        List<Endereco> enderecos = enderecoRepository.findAll();
+        model.addAttribute("enderecos", enderecos);
+
+        Double totalVenda = this.venda.totalVenda();
+
+        session.setAttribute("valorTotal", totalVenda);
+
+        model.addAttribute("total", totalVenda);
+
+        model.addAttribute("venda", this.venda);
+        model.addAttribute("tipos", tipoEnderecoRepository.findAll());
+        model.addAttribute("endereco", new Endereco());
+
+        return "venda/checkout";
+    }
+
+
+    private Pessoa obterPessoaLogada() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-            return "redirect:/login"; // Redireciona para login
+            throw new IllegalStateException("Usuário não autenticado.");
         }
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Usuario usuarioLogado = usuarioRepository.findByUsername(userDetails.getUsername())
+        var usuarioLogado = usuarioRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado no banco de dados."));
-
-        if (usuarioLogado.isAdmin()) {
-            model.addAttribute("errorMessage", "Admin não pode finalizar venda.");
-            return "venda/carrinho";
-        }
 
         Pessoa pessoa = usuarioLogado.getPessoa();
         if (pessoa == null) {
-            model.addAttribute("errorMessage", "Usuário não possui uma pessoa associada.");
-            return "venda/carrinho";
+            throw new IllegalStateException("Usuário não possui uma pessoa associada.");
         }
 
-        if (this.venda.getItensVenda().isEmpty()) {
-            model.addAttribute("errorMessage", "Impossível finalizar a venda. Carrinho vazio.");
-            return "venda/carrinho";
+        return pessoa;
+    }
+
+    @PostMapping("/finalizar")
+    public String finalizarVenda(@RequestParam Map<String, String> formData, HttpSession session, Model model) {
+        Pessoa pessoa = obterPessoaLogada();
+
+        Endereco enderecoEntrega;
+        if (formData.containsKey("cep")) {
+            enderecoEntrega = new Endereco();
+            enderecoEntrega.setCep(formData.get("cep"));
+            enderecoEntrega.setLogradouro(formData.get("logradouro"));
+            enderecoEntrega.setNumero(formData.get("numero"));
+            enderecoEntrega.setBairro(formData.get("bairro"));
+            enderecoEntrega.setCidade(formData.get("cidade"));
+            enderecoEntrega.setEstado(formData.get("estado"));
+            enderecoEntrega.setPessoas(List.of(pessoa));
+            enderecoRepository.save(enderecoEntrega);
+        } else {
+           //analisar se isso aqui é útil
+            enderecoEntrega = pessoa.getEnderecos().isEmpty() ? null : pessoa.getEnderecos().get(0);
         }
 
-        // Finalizando venda
+        if (enderecoEntrega == null) {
+            model.addAttribute("errorMessage", "Por favor, informe um endereço de entrega.");
+            return "redirect:/venda/carrinho";
+        }
+
         this.venda.setPessoa(pessoa);
+        this.venda.setEnderecoEntrega(enderecoEntrega);
         this.venda.setDataVenda(LocalDateTime.now());
 
         vendaRepository.save(this.venda);
 
-        // Removendo carrinho da sessão para evitar reuso da mesma venda
-        httpSession.removeAttribute("venda");
-        this.venda = new Venda(); // Criando nova instância para próxima venda
+        session.removeAttribute("enderecoEntrega");
+        session.removeAttribute("venda");
+        this.venda = new Venda();
 
         model.addAttribute("successMessage", "Venda finalizada com sucesso!");
-        return "venda/carrinho";
+        return "redirect:/venda/carrinho";
     }
 
     @GetMapping("/list")
