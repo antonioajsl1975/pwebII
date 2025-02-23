@@ -71,6 +71,7 @@
                         </a>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-md-4">
@@ -97,7 +98,7 @@
                             </li>
                         </ul>
 
-                        <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="|venda/checkout|" method="post">
+                        <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/venda/checkout}" method="post">
                             <button type="submit" class="btn btn-success btn-lg w-100 mt-3">
                                 Checkout
                             </button>
@@ -110,23 +111,6 @@
                            onclick="sessionStorage.setItem('redirectAfterLogin', '/venda/checkout')">
                             Checkout
                         </a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <p><strong>Formas de Pagamento</strong></p>
-                        <img class="me-2" width="45px"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                             alt="Visa" />
-                        <img class="me-2" width="45px"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                             alt="American Express" />
-                        <img class="me-2" width="45px"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                             alt="Mastercard" />
-                        <img class="me-2" width="45px"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp"
-                             alt="PayPal acceptance mark" />
                     </div>
                 </div>
             </div>

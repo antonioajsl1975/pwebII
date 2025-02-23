@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping
+@RequestMapping("/login")
 public class LoginController {
 
-//    @PostMapping("/login")
-//    public String loginPost() {
-//        return "redirect:/produto/catalogo";
-//    }
+    @PostMapping("/login")
+    public String loginPost() {
+        return "login";
+    }
 }

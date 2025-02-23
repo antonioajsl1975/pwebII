@@ -1,10 +1,10 @@
-package br.edu.ifto.aula07;
+package br.edu.ifto.aula09;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Aula07ApplicationTests {
+class Aula09ApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -4,6 +4,7 @@ import br.edu.ifto.aula09.model.entity.Usuario;
 import br.edu.ifto.aula09.model.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -31,7 +32,10 @@ public class UsuarioDetailsManager implements UserDetailsManager {
     @Override
     public UserDetails loadUserByUsername(String username) {
         return usuarioRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+                .orElseThrow(() -> {
+                    SecurityContextHolder.clearContext();
+                    return new RuntimeException("Usuário não encontrado!");
+                });
     }
 
     @Override

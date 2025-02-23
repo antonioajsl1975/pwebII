@@ -12,8 +12,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Scope("session")
-//@Component
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor @AllArgsConstructor

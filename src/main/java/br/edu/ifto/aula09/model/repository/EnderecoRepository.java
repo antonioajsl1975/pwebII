@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
     List<Pessoa> findByPessoas(Pessoa pessoa);
     List<Endereco> findByCepAndNumero(String cep, String numero);
+    List<Endereco> findByPessoas_Id(Long pessoaId);
 }

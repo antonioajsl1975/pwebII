@@ -43,8 +43,8 @@ public class Endereco {
             inverseJoinColumns = @JoinColumn(name = "pessoa_id"))
     private List<Pessoa> pessoas = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_endereco_id", nullable = false)
-    private TipoEndereco tipoEndereco;
+//    @ManyToOne
+//    @JoinColumn(name = "tipo_endereco_id", nullable = false)
+//    private TipoEndereco tipoEndereco;
 }
 

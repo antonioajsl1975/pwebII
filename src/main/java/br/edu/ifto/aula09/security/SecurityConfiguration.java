@@ -27,12 +27,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/logout", "/saveRedirectAfterLogin"))
+//                .csrf(csrf -> csrf.ignoringRequestMatchers("/logout", "/saveRedirectAfterLogin"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/produto/catalogo", "/venda/carrinho", "/venda/checkout",
                                 "/venda/adicionaCarrinho/*", "/venda/removerProdutoCarrinho/*",
                                 "/venda/alterarQuantidade/*", "/pessoa/form",
-                                "/pessoa/cadastro", "/venda/alterarQuantidade/**", "/venda/finalizar", "/saveRedirectAfterLogin").permitAll()
+                                "/pessoa/cadastro", "/venda/alterarQuantidade/**", "/saveRedirectAfterLogin").permitAll()
+                        .requestMatchers("/venda/finalizar").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -44,11 +45,12 @@ public class SecurityConfiguration {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/produto/catalogo?logout=true")
-                        .permitAll()
-                )
-                .rememberMe(rememberMe -> rememberMe.userDetailsService(userDetailsManager()));
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/produto/catalogo?logout=true")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+        );
 
         return http.build();
     }

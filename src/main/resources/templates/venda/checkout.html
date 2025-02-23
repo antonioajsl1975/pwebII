@@ -10,30 +10,32 @@
 <main>
   <div class="container mt-5">
     <h2>Finalizar a compra</h2>
-    <div class="row">
+    <!-- Formulário unificado para envio dos dados de endereço, pagamento e itens do carrinho -->
+    <form th:action="@{/venda/finalizar}" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+      <div class="row">
 
-      <div class="col-md-8">
-
-        <div class="border p-3 rounded mb-4 shadow-sm">
-          <div class="mt-3">
-            <h5>Endereço de Entrega:</h5>
-
-            <div th:if="${!#lists.isEmpty(enderecos)}">
-              <ul class="list-group mb-3">
-                <li class="list-group-item" th:each="endereco : ${enderecos}">
-                  <span th:text="${endereco.logradouro}"></span>,
-                  <span th:text="${endereco.numero}"></span> <br>
-                  <span th:text="${endereco.bairro}"></span> -
-                  <span th:text="${endereco.cidade}"></span>/<span th:text="${endereco.estado}"></span>
-                </li>
-              </ul>
-            </div>
-
-
-            <div th:if="${#lists.isEmpty(enderecos)}">
-              <p class="text-danger">Informe o CEP para buscar o endereço:</p>
-
-              <form action="/venda/finalizar" method="post">
+        <div class="col-md-8">
+          <div class="border p-3 rounded mb-4 shadow-sm">
+            <div class="mt-3">
+              <h5>Endereço de Entrega:</h5>
+              <!-- Caso já existam endereços cadastrados, permite a seleção -->
+              <div th:if="${!#lists.isEmpty(enderecos)}">
+                <ul class="list-group mb-3">
+                  <li class="list-group-item" th:each="endereco : ${enderecos}">
+                    <label>
+                      <input type="radio" name="enderecoId" th:value="${endereco.id}"
+                             th:checked="${endereco == enderecos[0]}">
+                      <span th:text="${endereco.logradouro}"></span>,
+                      <span th:text="${endereco.numero}"></span> <br>
+                      <span th:text="${endereco.bairro}"></span> -
+                      <span th:text="${endereco.cidade}"></span>/<span th:text="${endereco.estado}"></span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div th:if="${#lists.isEmpty(enderecos)}">
+                <p class="text-danger">Informe o CEP para buscar o endereço:</p>
 
                 <div class="row mb-3">
                   <div class="col-md-3">
@@ -46,7 +48,7 @@
                   </div>
                   <div class="col-md-3">
                     <label for="numero" class="form-label">Número:</label>
-                    <input type="text" id="numero" name="numero" class="form-control"  required>
+                    <input type="text" id="numero" name="numero" class="form-control" required>
                   </div>
                 </div>
 
@@ -64,33 +66,62 @@
                     <input type="text" id="estado" name="estado" class="form-control" readonly>
                   </div>
                 </div>
-              </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="border p-3 rounded mb-4 shadow-sm">
+            <h5>Método de Pagamento:</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="pagamento" id="cartao" value="cartao" checked>
+              <label class="form-check-label" for="cartao">
+                Cartão de Crédito
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="pagamento" id="boleto" value="boleto">
+              <label class="form-check-label" for="boleto">
+                Boleto Bancário
+              </label>
             </div>
           </div>
         </div>
 
-        <div class="border p-3 rounded mb-4 shadow-sm">
-          método de pagamento aqui...
-        </div>
-
-      </div>
-
-      <div class="col-md-4">
-        <div class="border p-3 rounded shadow-sm">
-          <h5>Resumo da compra</h5>
-
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total</span>
+        <div class="col-md-4">
+          <div class="border p-4 rounded shadow-sm bg-white">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Itens no Carrinho</h5>
+            </div>
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="item : ${session.venda?.itensVenda}">
+                <td th:text="${item.produto.descricao}"></td>
+                <td th:text="${item.quantidade}"></td>
+                <td th:text="${#numbers.formatCurrency(item.totalItem())}"></td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <strong>Total</strong>
               <strong class="text-success" th:text="${#numbers.formatCurrency(total)}"></strong>
-            </li>
-          </ul>
-          <button type="submit" class="btn btn-danger w-100" onclick="document.forms[0].submit()">Comprar</button>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Finalizar Compra</button>
+          </div>
         </div>
+
       </div>
-    </div>
+    </form>
   </div>
+
   <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
+
   <script>
     document.getElementById('cep').addEventListener('blur', function() {
       var cep = this.value.replace(/\D/g, '');

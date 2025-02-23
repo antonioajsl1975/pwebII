@@ -27,6 +27,20 @@
                 </tr>
             </tbody>
         </table>
+        <div th:if="${!#lists.isEmpty(detail)}">
+            <ul class="list-group mb-3">
+                <li class="list-group-item" th:each="endereco : ${detail}">
+                    <label>Endereço de entrega:<br>
+                        <span th:text="|${detail.enderecoEntrega.logradouro}, |"></span> <br>
+                        <span th:text="|${detail.enderecoEntrega.numero}, |"></span>
+                        <span th:text="|${detail.enderecoEntrega.bairro}, |"></span>
+                        <span th:text="|${detail.enderecoEntrega.cidade}/|"></span>
+                        <span th:text="|${detail.enderecoEntrega.estado} - |"></span>
+                        <spa th:text="|CEP ${detail.enderecoEntrega.cep}|"></spa>
+                    </label>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="container mt-5 border p-3 rounded shadow">
